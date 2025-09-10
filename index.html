@@ -5,181 +5,95 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f7eac6;          /* darker side colour */
+      background: #f7eac6;
       color: black;
-      max-width: 1000px;           /* main column width */
+      max-width: 1000px;
       margin: 20px auto;
       padding: 0 15px;
-      box-shadow: 0 0 0 9999px white; /* creates white content area, leaves sides coloured */
+      box-shadow: 0 0 0 9999px white;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+    h1 { text-align: center; margin-bottom: 30px; }
 
-    /* Buttons container */
     #filter-buttons, #language-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
+      display: flex; justify-content: center; gap: 15px;
+      margin-bottom: 20px; flex-wrap: wrap;
     }
-
-    /* buttons style */
     button {
-      padding: 8px 14px;
-      border: 2px solid #444;
-      background: white;
-      cursor: pointer;
-      font-weight: bold;
-      border-radius: 4px;
+      padding: 8px 14px; border: 2px solid #444;
+      background: white; cursor: pointer;
+      font-weight: bold; border-radius: 4px;
       transition: background-color 0.3s, color 0.3s;
     }
-    button.active {
-      background-color: #444;
-      color: white;
-    }
+    button.active { background-color: #444; color: white; }
 
-    /* product list */
     .product {
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       border-bottom: 1px solid #ccc;
-      padding: 15px 0;
-      cursor: pointer; /* make it obvious that it is clickable */
+      padding: 15px 0; cursor: pointer;
       position: relative;
     }
     .product img {
-      max-width: 240px;
-      max-height: 160px;
-      margin-right: 30px;
-      border: 1px solid #ddd;
-      padding: 3px;
-      background: #f9f9f9;
-      pointer-events: none; /* so clicks go to product div */
-    }
-    .product-details {
-      max-width: 520px;
+      max-width: 240px; max-height: 160px;
+      margin-right: 30px; border: 1px solid #ddd;
+      padding: 3px; background: #f9f9f9;
       pointer-events: none;
     }
-    .product-details strong {
-      font-size: 1.1em;
-    }
+    .product-details { max-width: 520px; pointer-events: none; }
+    .product-details strong { font-size: 1.1em; }
 
-    /* quantity controls */
     .quantity-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: auto;
+      display: flex; align-items: center; gap: 8px;
+      position: absolute; right: 15px; top: 50%;
+      transform: translateY(-50%); pointer-events: auto;
     }
     .quantity-controls button {
-      width: 28px;
-      height: 28px;
-      padding: 0;
-      font-size: 20px;
-      line-height: 20px;
-      text-align: center;
+      width: 28px; height: 28px; padding: 0;
+      font-size: 20px; line-height: 20px; text-align: center;
       user-select: none;
     }
     .quantity-controls span {
-      min-width: 22px;
-      text-align: center;
-      display: inline-block;
-      font-weight: bold;
-      font-size: 16px;
+      min-width: 22px; text-align: center; display: inline-block;
+      font-weight: bold; font-size: 16px;
     }
 
-    /* contact paragraph */
-    p.contact {
-      text-align: center;
-      margin-top: 40px;
-      font-style: italic;
-    }
-    a {
-      color: #0000ee;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
+    p.contact { text-align: center; margin-top: 40px; font-style: italic; }
+    a { color: #0000ee; text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-    /* popup overlay */
     .popup-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);  /* dim background */
-      display: none;                /* hidden by default */
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); display: none;
+      justify-content: center; align-items: center; z-index: 1000;
     }
-
-    /* popup box */
     .popup-content {
-      background: white;
-      padding: 40px;
-      max-width: 700px;
-      width: 90%;
-      border-radius: 6px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
-      position: relative;
-      text-align: center;
+      background: white; padding: 40px; max-width: 700px; width: 90%;
+      border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      position: relative; text-align: center;
     }
-
-    /* close button */
     .popup-close {
-      position: absolute;
-      top: 5px;
-      right: 15px;
-      font-size: 36px;
-      font-weight: bold;
-      cursor: pointer;
+      position: absolute; top: 5px; right: 15px;
+      font-size: 36px; font-weight: bold; cursor: pointer;
     }
+    .popup-content img { max-width: 100%; height: auto; margin-bottom: 15px; }
 
-    /* image inside popup */
-    .popup-content img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 15px;
-    }
-
-    /* order summary box */
     #order-summary {
-      margin-top: 30px;
-      padding: 20px;
-      border: 1px solid #444;
-      border-radius: 6px;
-      background: #fff;
-      white-space: pre-line;
-      font-family: monospace;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
+      margin-top: 30px; padding: 20px;
+      border: 1px solid #444; border-radius: 6px; background: #fff;
+      white-space: pre-line; font-family: monospace;
+      max-width: 700px; margin-left: auto; margin-right: auto;
     }
     #send-email-button {
-      display: inline-block;
-      margin-top: 12px;
-      padding: 10px 18px;
-      border-radius: 5px;
-      background-color: #444;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
+      display: inline-block; margin-top: 12px; padding: 10px 18px;
+      border-radius: 5px; background-color: #444;
+      color: white; text-decoration: none; font-weight: bold;
     }
-    #send-email-button:hover {
-      background-color: #222;
-    }
+    #send-email-button:hover { background-color: #222; }
   </style>
 </head>
+
+
+
+
 <body>
   <h1>SwissFourParts - Honda CB Motorcycle Parts</h1>
 
@@ -192,108 +106,34 @@
   <!-- Filter buttons -->
   <div id="filter-buttons">
     <button id="filter-alle" class="active" onclick="filterProducts('alle')">
-      <span class="de-text">Alle anzeigen</span><span class="en-text" style="display:none;">Show all</span>
+      <span class="de-text">Alle anzeigen</span>
+      <span class="en-text" style="display:none;">Show all</span>
     </button>
     <button id="filter-cb750" onclick="filterProducts('CB750')">
-      <span class="de-text" style="display:none;">CB750 Four</span><span class="en-text">CB750 Four</span>
+      <span class="de-text" style="display:none;">CB750 Four</span>
+      <span class="en-text">CB750 Four</span>
     </button>
     <button id="filter-cb550k" onclick="filterProducts('CB550K')">
-      <span class="de-text" style="display:none;">CB550K</span><span class="en-text">CB550K</span>
+      <span class="de-text" style="display:none;">CB550K</span>
+      <span class="en-text">CB550K</span>
     </button>
     <button id="filter-cb125t" onclick="filterProducts('CB125T')">
-      <span class="de-text" style="display:none;">CB125T</span><span class="en-text">CB125T</span>
+      <span class="de-text" style="display:none;">CB125T</span>
+      <span class="en-text">CB125T</span>
     </button>
   </div>
 
-  <!-- product list -->
-  <div id="product-list">
-    <div class="product CB750" onclick="openPopup('images/tire_sticker.jpg', 'Tire sticker', {de: '<strong>CB750 Sticker: Reifeninformation</strong><br>Sticker<br>Preis: CHF 6', en: '<strong>CB750 Sticker: Tire info</strong><br>Sticker<br>Price: CHF 6'})">
-      <img src="images/tire_sticker.jpg" alt="Tire sticker">
-      <div class="product-details">
-        <strong class="de-text">CB750 Sticker: Reifeninformation</strong>
-        <strong class="en-text" style="display:none;">CB750 Sticker: Tire info</strong><br>
-        <span class="de-text">Sticker</span><span class="en-text" style="display:none;">Sticker</span><br>
-        <span class="de-text">Preis: CHF 6</span><span class="en-text" style="display:none;">Price: CHF 6</span>
-      </div>
-      <div class="quantity-controls" onclick="event.stopPropagation()">
-        <button onclick="decreaseQuantity(0)">-</button>
-        <span id="qty-0">0</span>
-        <button onclick="increaseQuantity(0)">+</button>
-      </div>
-    </div>
+  <!-- Product list generated dynamically -->
+  <div id="product-list"></div>
 
-    <div class="product CB750" onclick="openPopup('images/tank_emblem_set.jpg', 'Tank Emblem set', {de: '<strong>CB750 K1 Tankemblem Kit</strong><br>originales Ersatzteil<br>Preis: CHF 85', en: '<strong>CB750 K1 Tank Emblem Kit</strong><br>original spare part<br>Price: CHF 85'})">
-      <img src="images/tank_emblem_set.jpg" alt="Tank Emblem set">
-      <div class="product-details">
-        <strong class="de-text">CB750 K1 Tankemblem Kit</strong>
-        <strong class="en-text" style="display:none;">CB750 K1 Tank Emblem Kit</strong><br>
-        <span class="de-text">originales Ersatzteil</span><span class="en-text" style="display:none;">original spare part</span><br>
-        <span class="de-text">Preis: CHF 85</span><span class="en-text" style="display:none;">Price: CHF 85</span>
-      </div>
-      <div class="quantity-controls" onclick="event.stopPropagation()">
-        <button onclick="decreaseQuantity(1)">-</button>
-        <span id="qty-1">0</span>
-        <button onclick="increaseQuantity(1)">+</button>
-      </div>
-    </div>
-
-    <div class="product CB750" onclick="openPopup('images/emblem_links.jpg', 'Emblem links', {de: '<strong>CB750 Emblem links</strong><br>originales Ersatzteil<br>Preis: CHF 45', en: '<strong>CB750 Emblem left</strong><br>original spare part<br>Price: CHF 45'})">
-      <img src="images/emblem_links.jpg" alt="Emblem links">
-      <div class="product-details">
-        <strong class="de-text">CB750 Emblem links</strong>
-        <strong class="en-text" style="display:none;">CB750 Emblem left</strong><br>
-        <span class="de-text">originales Ersatzteil</span><span class="en-text" style="display:none;">original spare part</span><br>
-        <span class="de-text">Preis: CHF 45</span><span class="en-text" style="display:none;">Price: CHF 45</span>
-      </div>
-      <div class="quantity-controls" onclick="event.stopPropagation()">
-        <button onclick="decreaseQuantity(2)">-</button>
-        <span id="qty-2">0</span>
-        <button onclick="increaseQuantity(2)">+</button>
-      </div>
-    </div>
-
-    <div class="product CB750" onclick="openPopup('images/emblem_rechts.jpg', 'Emblem rechts', {de: '<strong>CB750 Emblem rechts</strong><br>originales Ersatzteil<br>Preis: CHF 45', en: '<strong>CB750 Emblem rechts</strong><br>original spare part<br>Price: CHF 45'})">
-      <img src="images/emblem_rechts.jpg" alt="Emblem rechts">
-      <div class="product-details">
-        <strong class="de-text">CB750 Emblem rechts</strong>
-        <strong class="en-text" style="display:none;">CB750 Emblem rechts</strong><br>
-        <span class="de-text">originales Ersatzteil</span><span class="en-text" style="display:none;">original spare part</span><br>
-        <span class="de-text">Preis: CHF 45</span><span class="en-text" style="display:none;">Price: CHF 45</span>
-      </div>
-      <div class="quantity-controls" onclick="event.stopPropagation()">
-        <button onclick="decreaseQuantity(3)">-</button>
-        <span id="qty-3">0</span>
-        <button onclick="increaseQuantity(3)">+</button>
-      </div>
-    </div>
-
-    <div class="product CB125T CB750 CB550" onclick="openPopup('images/hupenknopf.jpg', 'Hupenknopf', {de: '<strong>Hupenknopf</strong><br>Replika Ersatzteil<br>Preis: CHF 10', en: '<strong>Horn button</strong><br>Replica spare part<br>Price: CHF 10'})">
-      <img src="images/hupenknopf.jpg" alt="Hupenknopf">
-      <div class="product-details">
-        <strong class="de-text">Hupenknopf</strong>
-        <strong class="en-text" style="display:none;">Horn button</strong><br>
-        <span class="de-text">Replika Ersatzteil</span><span class="en-text" style="display:none;">Replica spare part</span><br>
-        <span class="de-text">Preis: CHF 10</span><span class="en-text" style="display:none;">Price: CHF 10</span>
-      </div>
-      <div class="quantity-controls" onclick="event.stopPropagation()">
-        <button onclick="decreaseQuantity(4)">-</button>
-        <span id="qty-4">0</span>
-        <button onclick="increaseQuantity(4)">+</button>
-      </div>
-    </div>
-
-    <!-- Add more products as needed with increasing indices -->
-
-  </div>
-
-  <!-- Order summary and send email -->
+  <!-- Order summary -->
   <div id="order-summary">
     <strong id="order-summary-title">Bestellübersicht</strong><br>
     <pre id="order-summary-text">Keine Produkte ausgewählt.</pre>
     <a id="send-email-button" href="mailto:elias.leitgeweger@gmx.ch?subject=Bestellung%20SwissFourParts&body=Keine%20Produkte%20ausgew%C3%A4hlt." target="_blank" rel="noopener noreferrer">Bestellung senden</a>
   </div>
 
-  <!-- Popup for product details -->
+  <!-- Popup -->
   <div id="popup" class="popup-overlay" onclick="closePopup()">
     <div class="popup-content" onclick="event.stopPropagation()">
       <span class="popup-close" onclick="closePopup()">&times;</span>
@@ -303,103 +143,167 @@
   </div>
 
   <script>
-    // Language state
-    let language = 'de';
-
-    // Products data for order summary
+    // -------------------------
+    // PRODUCT DATA
+    // -------------------------
     const products = [
-      {name_de: 'CB750 Sticker: Reifeninformation', name_en: 'CB750 Sticker: Tire info'},
-      {name_de: 'CB750 K1 Tankemblem Kit', name_en: 'CB750 K1 Tank Emblem Kit'},
-      {name_de: 'CB750 Emblem links', name_en: 'CB750 Emblem left'},
-      {name_de: 'CB750 Emblem rechts', name_en: 'CB750 Emblem right'},
-      {name_de: 'Hupenknopf', name_en: 'Horn button'}
-      // add more here as needed
+      {
+        name_de: "CB750 Zündkerzenstecker Set",
+        name_en: "CB750 Spark plug cap set",
+        price: 40,
+        description_de: "NGK",
+        description_en: "NGK",
+        image: "images/kerzenstecker.jpg",
+        categories: ["CB750"]
+      },
+      {
+        name_de: "CB750 Kupplungshebel",
+        name_en: "CB750 Clutch lever",
+        price: 18,
+        description_de: "originales Ersatzteil",
+        description_en: "original spare part",
+        image: "images/kupplungshebel.jpg",
+        categories: ["CB750"]
+      },
+      {
+        name_de: "CB750 Sticker: Reifeninformation",
+        name_en: "CB750 Sticker: Tire info",
+        price: 6,
+        description_de: "Sticker",
+        description_en: "Sticker",
+        image: "images/tire_sticker.jpg",
+        categories: ["CB750"]
+      },
+      {
+        name_de: "CB750 K1 Tankemblem Kit",
+        name_en: "CB750 K1 Tank Emblem Kit",
+        price: 85,
+        description_de: "originales Ersatzteil",
+        description_en: "original spare part",
+        image: "images/tank_emblem_set.jpg",
+        categories: ["CB750"]
+      },
+      {
+        name_de: "CB750 Emblem links",
+        name_en: "CB750 Emblem left",
+        price: 45,
+        description_de: "originales Ersatzteil",
+        description_en: "original spare part",
+        image: "images/emblem_links.jpg",
+        categories: ["CB750"]
+      },
+      {
+        name_de: "CB750 Emblem rechts",
+        name_en: "CB750 Emblem right",
+        price: 45,
+        description_de: "originales Ersatzteil",
+        description_en: "original spare part",
+        image: "images/emblem_rechts.jpg",
+        categories: ["CB750"]
+      },
+      {
+        name_de: "Hupenknopf",
+        name_en: "Horn button",
+        price: 10,
+        description_de: "Replika Ersatzteil",
+        description_en: "Replica spare part",
+        image: "images/hupenknopf.jpg",
+        categories: ["CB125T", "CB750", "CB550"]
+      }
+      // ➕ Add more products here
     ];
 
-    // Quantities per product
+    // Quantities
     let quantities = new Array(products.length).fill(0);
+    let language = 'de';
 
-    // Set language and update UI accordingly
+    // -------------------------
+    // RENDER FUNCTIONS
+    // -------------------------
+    function renderProducts() {
+      const container = document.getElementById("product-list");
+      container.innerHTML = "";
+
+      products.forEach((p, index) => {
+        const productDiv = document.createElement("div");
+        productDiv.className = "product " + p.categories.join(" ");
+        productDiv.onclick = () =>
+          openPopup(p.image, p.name_en, {
+            de: `<strong>${p.name_de}</strong><br>${p.description_de}<br>Preis: CHF ${p.price}`,
+            en: `<strong>${p.name_en}</strong><br>${p.description_en}<br>Price: CHF ${p.price}`
+          });
+
+        productDiv.innerHTML = `
+          <img src="${p.image}" alt="${p.name_en}">
+          <div class="product-details">
+            <strong class="de-text">${p.name_de}</strong>
+            <strong class="en-text" style="display:none;">${p.name_en}</strong><br>
+            <span class="de-text">${p.description_de}</span>
+            <span class="en-text" style="display:none;">${p.description_en}</span><br>
+            <span class="de-text">Preis: CHF ${p.price}</span>
+            <span class="en-text" style="display:none;">Price: CHF ${p.price}</span>
+          </div>
+          <div class="quantity-controls" onclick="event.stopPropagation()">
+            <button onclick="decreaseQuantity(${index})">-</button>
+            <span id="qty-${index}">0</span>
+            <button onclick="increaseQuantity(${index})">+</button>
+          </div>
+        `;
+        container.appendChild(productDiv);
+      });
+    }
+
+    // -------------------------
+    // UI FUNCTIONS
+    // -------------------------
     function setLanguage(lang) {
       language = lang;
-
-      // Update button highlights
       document.getElementById('lang-de').classList.toggle('active', lang === 'de');
       document.getElementById('lang-en').classList.toggle('active', lang === 'en');
 
-      // Show/hide language spans
       document.querySelectorAll('.de-text').forEach(el => el.style.display = (lang === 'de') ? '' : 'none');
       document.querySelectorAll('.en-text').forEach(el => el.style.display = (lang === 'en') ? '' : 'none');
 
-      // Update filter buttons text visibility
-      // "Alle anzeigen" button always visible but text changes:
-      // For other filter buttons, show only relevant language text
-      ['filter-alle', 'filter-cb750', 'filter-cb550k', 'filter-cb125t'].forEach(id => {
+      ['filter-alle','filter-cb750','filter-cb550k','filter-cb125t'].forEach(id => {
         const btn = document.getElementById(id);
         btn.querySelectorAll('span.de-text').forEach(el => el.style.display = (lang === 'de') ? '' : 'none');
         btn.querySelectorAll('span.en-text').forEach(el => el.style.display = (lang === 'en') ? '' : 'none');
       });
 
-      // Update order summary title and button text
       document.getElementById('order-summary-title').textContent = (lang === 'de') ? 'Bestellübersicht' : 'Order summary';
       document.getElementById('send-email-button').textContent = (lang === 'de') ? 'Bestellung senden' : 'Send order';
 
       updateOrderSummary();
     }
 
-    // Filter products by class
     function filterProducts(filter) {
-      // Update filter buttons active states
-      ['filter-alle', 'filter-cb750', 'filter-cb550k', 'filter-cb125t'].forEach(id => {
+      ['filter-alle','filter-cb750','filter-cb550k','filter-cb125t'].forEach(id => {
         document.getElementById(id).classList.toggle('active', id === 'filter-' + filter.toLowerCase());
       });
-
-      const productsDiv = document.getElementById('product-list');
-      const allProducts = productsDiv.querySelectorAll('.product');
-      allProducts.forEach(p => {
-        if(filter === 'alle') {
-          p.style.display = '';
-        } else {
-          p.style.display = p.classList.contains(filter) ? '' : 'none';
-        }
+      document.querySelectorAll('.product').forEach(p => {
+        p.style.display = (filter === 'alle' || p.classList.contains(filter)) ? '' : 'none';
       });
     }
 
-    // Open product popup with details
     function openPopup(imgSrc, altText, textObj) {
       document.getElementById('popup-img').src = imgSrc;
       document.getElementById('popup-img').alt = altText;
       document.getElementById('popup-text').innerHTML = language === 'de' ? textObj.de : textObj.en;
       document.getElementById('popup').style.display = 'flex';
     }
+    function closePopup() { document.getElementById('popup').style.display = 'none'; }
 
-    // Close popup
-    function closePopup() {
-      document.getElementById('popup').style.display = 'none';
+    function openAboutPopup() {
+      document.getElementById('about-popup').style.display = 'flex';
+    }
+    function closeAboutPopup() {
+      document.getElementById('about-popup').style.display = 'none';
     }
 
-    // Increase quantity
-    function increaseQuantity(index) {
-      quantities[index]++;
-      updateQuantityDisplay(index);
-      updateOrderSummary();
-    }
+    function increaseQuantity(i) { quantities[i]++; updateQuantityDisplay(i); updateOrderSummary(); }
+    function decreaseQuantity(i) { if (quantities[i] > 0) { quantities[i]--; updateQuantityDisplay(i); updateOrderSummary(); } }
+    function updateQuantityDisplay(i) { document.getElementById('qty-' + i).textContent = quantities[i]; }
 
-    // Decrease quantity
-    function decreaseQuantity(index) {
-      if (quantities[index] > 0) {
-        quantities[index]--;
-        updateQuantityDisplay(index);
-        updateOrderSummary();
-      }
-    }
-
-    // Update displayed quantity for product
-    function updateQuantityDisplay(index) {
-      document.getElementById('qty-' + index).textContent = quantities[index];
-    }
-
-    // Update the order summary text and mailto link
     function updateOrderSummary() {
       let summaryTitle = language === 'de' ? 'Bestellübersicht' : 'Order summary';
       let productLabel = language === 'de' ? 'Produkt' : 'Product';
@@ -410,45 +314,80 @@
       let emailBody = summaryTitle + ':\n\n';
       let hasItems = false;
 
-      products.forEach((product, i) => {
+      products.forEach((p, i) => {
         if (quantities[i] > 0) {
           hasItems = true;
-          emailBody += `${productLabel}: ${language === 'de' ? product.name_de : product.name_en}\n${quantityLabel}: ${quantities[i]}\n\n`;
+          emailBody += `${productLabel}: ${language === 'de' ? p.name_de : p.name_en}\n${quantityLabel}: ${quantities[i]}\n\n`;
         }
       });
 
-      if (!hasItems) {
-        emailBody += noItemsText;
-      }
-
+      if (!hasItems) emailBody += noItemsText;
       emailBody = encodeURIComponent(emailBody);
 
-      // Update summary text
-      let summaryText = '';
-      if (!hasItems) {
-        summaryText = noItemsText;
-      } else {
-        products.forEach((product, i) => {
+      let summaryText = !hasItems ? noItemsText : "";
+      if (hasItems) {
+        products.forEach((p, i) => {
           if (quantities[i] > 0) {
-            summaryText += `${language === 'de' ? product.name_de : product.name_en} x ${quantities[i]}\n`;
+            summaryText += `${language === 'de' ? p.name_de : p.name_en} x ${quantities[i]}\n`;
           }
         });
       }
       document.getElementById('order-summary-text').textContent = summaryText;
 
-      // Update mailto link
-      let mailtoLink = `mailto:elias.leitgeweger@gmx.ch?subject=${emailSubject}&body=${emailBody}`;
-      document.getElementById('send-email-button').href = mailtoLink;
+      document.getElementById('send-email-button').href = `mailto:elias.leitgeweger@gmx.ch?subject=${emailSubject}&body=${emailBody}`;
     }
 
-    // On initial load
+    // -------------------------
+    // INITIALIZE
+    // -------------------------
     window.onload = () => {
-      setLanguage('de');      // default language
-      filterProducts('alle'); // default filter
-      updateOrderSummary();   // initialize summary
+      renderProducts();
+      setLanguage('de');
+      filterProducts('alle');
+      updateOrderSummary();
     };
   </script>
+
+
+
+<!-- About Us Popup -->
+<div id="about-popup" class="popup-overlay" onclick="closeAboutPopup()">
+  <div class="popup-content" onclick="event.stopPropagation()">
+    <span class="popup-close" onclick="closeAboutPopup()">&times;</span>
+    
+    <h2>About SwissFourParts</h2>
+    <p>
+      SwissFourParts is run by a Honda CB enthusiast from Switzerland.  
+      I restore, ride, and collect CB motorcycles — and sell original and reproduction parts I use myself.  
+      My goal is to help other riders keep their classic Hondas alive.
+    </p>
+    
+    <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:40px;">
+      <img src="images/cb550.jpg" alt="Honda CB550" style="max-width:500px; border:1px solid #ccc;">
+    </div>
+  </div>
+</div>
+
+
+
 </body>
+
+  <!-- Footer -->
+  <footer style="margin-top:50px; padding:20px; border-top:1px solid #ccc; text-align:center; font-size:0.9em; color:#444;">
+    <p><a href="#" onclick="openAboutPopup()">About Us</a></p>
+
+    <p><strong>SwissFourParts</strong><br>
+    Frohburgstrasse 142<br>
+    8057 Zürich, Switzerland<br>
+    Email: <a href="mailto:elias.leitgeweger@gmx.ch">elias.leitgeweger@gmx.ch</a></p>
+
+    <p style="margin-top:20px; font-size:0.8em; color:#666;">
+      © 2025 SwissFourParts. All rights reserved.
+    </p>
+  </footer>
+
+
 </html>
+
 
 
