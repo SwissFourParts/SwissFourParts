@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SwissFourParts - Honda CB Motorcycle Parts</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -88,6 +87,35 @@
       color: white; text-decoration: none; font-weight: bold;
     }
     #send-email-button:hover { background-color: #222; }
+
+#language-selection a {
+    color: black;
+    text-decoration: none;
+    padding: 2px 6px;
+}
+#language-selection a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 100px;              /* Abstand zwischen den Links */
+      margin-bottom: 25px;    /* Abstand zu den Kontaktdaten darunter */
+      font-size: 1.1em;       /* größere Schrift */
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: #5f162b;         /* gleiche Farbe wie bisher */
+      font-weight: bold;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 
@@ -95,13 +123,20 @@
 
 
 <body>
-  <h1>SwissFourParts - Honda CB Motorcycle Parts</h1>
-
-  <!-- Language buttons -->
-  <div id="language-buttons">
-    <button id="lang-de" class="active" onclick="setLanguage('de')">Deutsch</button>
-    <button id="lang-en" onclick="setLanguage('en')">English</button>
+<div id="header" style="position: relative; margin-bottom:40px; height:140px; background: #f7eac6; padding: 0 15px;">
+  <div style="position: absolute; left: 50%; transform: translateX(-50%); top: 10px; background: white; padding: 0px 0px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius:6px;">
+    <img src="images/sfp_logo_mit_schrift.png" alt="SwissFourParts Logo" style="max-height:140px; width:auto;">
   </div>
+
+  <div id="language-selection" style="position: absolute; right: 0; top: 0; font-weight:bold; font-size:1em; line-height:140px; padding-right:10px;">
+    <a href="#" id="lang-de" class="active" onclick="setLanguage('de')">Deutsch</a> | 
+    <a href="#" id="lang-en" onclick="setLanguage('en')">English</a>
+  </div>
+</div>
+
+
+
+
 
   <!-- Filter buttons -->
   <div id="filter-buttons">
@@ -256,25 +291,33 @@
     // -------------------------
     // UI FUNCTIONS
     // -------------------------
-    function setLanguage(lang) {
-      language = lang;
-      document.getElementById('lang-de').classList.toggle('active', lang === 'de');
-      document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+function setLanguage(lang) {
+    language = lang;
 
-      document.querySelectorAll('.de-text').forEach(el => el.style.display = (lang === 'de') ? '' : 'none');
-      document.querySelectorAll('.en-text').forEach(el => el.style.display = (lang === 'en') ? '' : 'none');
+    // Sprachauswahl links/rechts
+    document.getElementById('lang-de')?.classList.toggle('active', lang === 'de');
+    document.getElementById('lang-en')?.classList.toggle('active', lang === 'en');
 
-      ['filter-alle','filter-cb750','filter-cb550k','filter-cb125t'].forEach(id => {
+    // Alle Texte wechseln
+    document.querySelectorAll('.de-text').forEach(el => el.style.display = (lang === 'de') ? '' : 'none');
+    document.querySelectorAll('.en-text').forEach(el => el.style.display = (lang === 'en') ? '' : 'none');
+
+    // Filterbuttons Texte anpassen
+    ['filter-alle','filter-cb750','filter-cb550k','filter-cb125t',
+     'condition-new','condition-used'].forEach(id => {
         const btn = document.getElementById(id);
-        btn.querySelectorAll('span.de-text').forEach(el => el.style.display = (lang === 'de') ? '' : 'none');
-        btn.querySelectorAll('span.en-text').forEach(el => el.style.display = (lang === 'en') ? '' : 'none');
-      });
+        if(btn){
+            btn.querySelectorAll('span.de-text').forEach(el => el.style.display = (lang==='de')?'':'none');
+            btn.querySelectorAll('span.en-text').forEach(el => el.style.display = (lang==='en')?'':'none');
+        }
+    });
 
-      document.getElementById('order-summary-title').textContent = (lang === 'de') ? 'Bestellübersicht' : 'Order summary';
-      document.getElementById('send-email-button').textContent = (lang === 'de') ? 'Bestellung senden' : 'Send order';
+    // Order summary Texte
+    document.getElementById('order-summary-title').textContent = (lang==='de') ? 'Bestellübersicht' : 'Order summary';
+    document.getElementById('send-email-button').textContent = (lang==='de') ? 'Bestellung senden' : 'Send order';
 
-      updateOrderSummary();
-    }
+    updateOrderSummary();
+}
 
     function filterProducts(filter) {
       ['filter-alle','filter-cb750','filter-cb550k','filter-cb125t'].forEach(id => {
@@ -298,6 +341,19 @@
     }
     function closeAboutPopup() {
       document.getElementById('about-popup').style.display = 'none';
+    }
+    function openAgbPopup() {
+      document.getElementById('agb-popup').style.display = 'flex';
+    }
+    function closeAgbPopup() {
+      document.getElementById('agb-popup').style.display = 'none';
+    }
+
+    function openImpressumPopup() {
+      document.getElementById('impressum-popup').style.display = 'flex';
+    }
+    function closeImpressumPopup() {
+      document.getElementById('impressum-popup').style.display = 'none';
     }
 
     function increaseQuantity(i) { quantities[i]++; updateQuantityDisplay(i); updateOrderSummary(); }
@@ -355,16 +411,151 @@
   <div class="popup-content" onclick="event.stopPropagation()">
     <span class="popup-close" onclick="closeAboutPopup()">&times;</span>
     
-    <h2>About SwissFourParts</h2>
-    <p>
-      SwissFourParts is run by a Honda CB enthusiast from Switzerland.  
-      I restore, ride, and collect CB motorcycles — and sell original and reproduction parts I use myself.  
-      My goal is to help other riders keep their classic Hondas alive.
-    </p>
+<h2>
+  <span class="de-text" style="display:none;">Über SwissFourParts</span>
+  <span class="en-text">About SwissFourParts</span>
+</h2>
+<p>
+  <span class="de-text" style="display:none;">
+    SwissFourParts wird von einem Honda-CB-Enthusiasten aus der Schweiz betrieben.  
+    Ich restauriere, fahre und sammle CB-Motorräder – und verkaufe originale und Repro-Teile, die ich selbst verwende.  
+    Mein Ziel ist es, anderen Fahrern zu helfen, ihre klassischen Hondas am Leben zu erhalten.
+  </span>
+  <span class="en-text">
+    SwissFourParts is run by a Honda CB enthusiast from Switzerland.  
+    I restore, ride, and collect CB motorcycles — and sell original and reproduction parts I use myself.  
+    My goal is to help other riders keep their classic Hondas alive.
+  </span>
+</p>
     
     <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:40px;">
       <img src="images/cb550.jpg" alt="Honda CB550" style="max-width:500px; border:1px solid #ccc;">
     </div>
+  </div>
+</div>
+
+
+<!-- AGB Popup -->
+<div id="agb-popup" class="popup-overlay" onclick="closeAgbPopup()">
+  <div class="popup-content" onclick="event.stopPropagation()">
+    <span class="popup-close" onclick="closeAgbPopup()">&times;</span>
+<h2>
+  <span class="de-text" style="display:none;">AGBs</span>
+  <span class="en-text">Terms & Conditions</span>
+</h2>
+<p>
+  <span class="de-text" style="display:none;">
+  <strong>Gültigkeit</strong><br>
+  Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Bestellungen im Onlineshop von SwissFourParts. Mit Auftragserteilung anerkennt der Käufer diese Bedingungen. Abweichende Bestimmungen des Käufers haben keine Gültigkeit. Abholung der Ware ist nach Absprache in Zürich möglich.<br><br>
+
+  <strong>Preise</strong><br>
+  Alle Preise im Onlineshop verstehen sich in Schweizer Franken (CHF) und enthalten die gesetzliche Mehrwertsteuer (sofern anwendbar). Die Versandkosten werden im Bestellvorgang separat ausgewiesen. Preisänderungen bleiben vorbehalten.<br><br>
+
+  <strong>Lieferfristen</strong><br>
+  Bestellte Teile sind in der Regel an Lager. Der Lagerbestand wird nach Eingang der Bestellung überprüft; sollte ein Artikel oder eine gewünschte Menge nicht verfügbar sein, wird der Käufer informiert. Lieferungen innerhalb der Schweiz erfolgen in der Regel innert 2–5 Werktagen nach Zahlungseingang. Eine verspätete Lieferung entbindet nicht von der Abnahmeverpflichtung. Ansprüche aus Lieferverzug sind ausgeschlossen.<br><br>
+
+  <strong>Versand und Gefahrtragung</strong><br>
+  Die Versandkosten trägt der Käufer. Diese werden im Bestellvorgang ausgewiesen. Der Versand erfolgt auf Gefahr des Käufers. Sofern nicht anders vereinbart, wählt SwissFourParts die Versandart und den Versandweg nach bestem Ermessen, jedoch ohne Gewähr. Teillieferungen sind zulässig, sofern sie für eine rasche Abwicklung vorteilhaft erscheinen.<br><br>
+
+  <strong>Transportschäden</strong><br>
+  Transportschäden sind umgehend direkt bei der zuständigen Transportanstalt (z. B. Post, Paketdienst, Spedition) zu melden. Ohne Schadenmeldung des Transporteurs kann kein kostenloser Ersatz gewährt werden.<br><br>
+
+  <strong>Beanstandungen und Gewährleistung</strong><br>
+  Offensichtliche Mängel sind innerhalb von 14 Tagen nach Erhalt der Ware schriftlich geltend zu machen. Nach Ablauf dieser Frist gilt die Sendung als akzeptiert.<br>
+  Rücksendungen werden nur bei fehlerhafter Lieferung und nach vorheriger Absprache akzeptiert. Die Rücksendung muss in transportsicherer Verpackung und ausreichend frankiert erfolgen. Wir behalten uns vor, beschädigte Waren, die nicht mehr im Originalzustand eintreffen, ganz oder teilweise zu verrechnen.<br>
+  Bei berechtigten Beanstandungen verpflichtet sich SwissFourParts zu kostenloser Instandstellung, Ersatzlieferung oder Rechnungsnachlass. Soweit rechtlich zulässig, sind weitergehende Gewährleistungsansprüche ausgeschlossen. Die Gewährleistung entfällt, wenn der Käufer Änderungen oder Instandsetzungen ohne Zustimmung von SwissFourParts selbst oder durch Dritte vornimmt. Eine Haftung für Folgeschäden ist ausgeschlossen.<br><br>
+
+  <strong>Zahlungsbedingungen</strong><br>
+  Die Lieferung erfolgt ausschliesslich gegen Vorauskasse per Banküberweisung oder Twint. Die Ware wird erst nach Eingang der vollständigen Zahlung versendet.<br><br>
+
+  <strong>Lieferungen ins Ausland</strong><br>
+  Lieferungen ins Ausland sind nur nach vorheriger Absprache und ausschliesslich gegen Vorauskasse möglich.<br><br>
+
+  <strong>Datenschutz</strong><br>
+  Personenbezogene Kundendaten werden ausschliesslich im Rahmen der Bestellabwicklung verwendet und nicht an Dritte weitergegeben. Dabei werden die Bestimmungen des Schweizer Datenschutzgesetzes beachtet.<br><br>
+
+  <strong>Erfüllungsort und Gerichtsstand</strong><br>
+  Erfüllungsort für Lieferung und Zahlung sowie ausschliesslicher Gerichtsstand ist Zürich. Die Anwendung internationalen Kaufrechts ist ausgeschlossen.<br><br>
+
+  <strong>Schlussbestimmungen</strong><br>
+  Sollten einzelne Bestimmungen dieser AGB ganz oder teilweise unwirksam sein, bleibt die Gültigkeit der übrigen Bestimmungen unberührt. Irrtümer und Druckfehler bleiben vorbehalten.
+  </span>
+
+
+  <span class="en-text">
+  These Terms and Conditions (T&C) apply to all orders placed in the SwissFourParts online shop. By placing an order, the buyer accepts these conditions. Deviating terms of the buyer have no validity. Pickup of goods is possible in Zurich by prior arrangement.<br><br>
+
+  <strong>Prices</strong><br>
+  All prices in the online shop are in Swiss Francs (CHF) and include applicable VAT. Shipping costs are shown separately during the order process. Price changes are reserved.<br><br>
+
+  <strong>Delivery Times</strong><br>
+  Ordered parts are generally in stock. Stock is checked upon receipt of the order; if an item or the requested quantity is not available, the buyer will be informed. Deliveries within Switzerland usually take 2–5 business days after receipt of payment. Late delivery does not release the buyer from the obligation to accept the goods. Claims for delivery delays are excluded.<br><br>
+
+  <strong>Shipping and Risk</strong><br>
+  Shipping costs are borne by the buyer and are displayed during the order process. Delivery is at the buyer's risk. Unless otherwise agreed, SwissFourParts selects the shipping method and route at its discretion, without guarantee. Partial deliveries are allowed if they are advantageous for prompt order processing.<br><br>
+
+  <strong>Transport Damage</strong><br>
+  Transport damage must be reported immediately to the responsible transport company (e.g., post office, parcel service, freight forwarder). Without a damage report from the carrier, free replacement cannot be granted.<br><br>
+
+  <strong>Complaints and Warranty</strong><br>
+  Obvious defects must be reported in writing within 14 days after receipt of the goods. After this period, the shipment is considered accepted.<br>
+  Returns are only accepted in case of incorrect delivery and after prior arrangement. Returns must be in secure packaging and adequately prepaid. We reserve the right to charge for damaged goods that do not arrive in their original condition, wholly or partially.<br>
+  In the case of justified complaints, SwissFourParts undertakes free repair, replacement, or invoice reduction. As far as legally permissible, further warranty claims are excluded. Warranty is void if the buyer makes modifications or repairs without SwissFourParts' consent. Liability for consequential damages is excluded.<br><br>
+
+  <strong>Payment Terms</strong><br>
+  Delivery is only made against advance payment via bank transfer or Twint. Goods are shipped only after full payment has been received.<br><br>
+
+  <strong>Deliveries Abroad</strong><br>
+  Deliveries abroad are only possible by prior arrangement and against advance payment.<br><br>
+
+  <strong>Data Protection</strong><br>
+  Personal customer data is used exclusively for order processing and is not shared with third parties. The provisions of the Swiss Data Protection Act are observed.<br><br>
+
+  <strong>Place of Performance and Jurisdiction</strong><br>
+  The place of performance for delivery and payment as well as the exclusive jurisdiction is Zurich. The application of international sales law is excluded.<br><br>
+
+  <strong>Final Provisions</strong><br>
+  Should individual provisions of these Terms and Conditions be wholly or partially invalid, the validity of the remaining provisions remains unaffected. Errors and typos are reserved.
+  </span>
+</p>
+  </div>
+</div>
+
+
+
+<!-- Impressum Popup -->
+<div id="impressum-popup" class="popup-overlay" onclick="closeImpressumPopup()">
+  <div class="popup-content" onclick="event.stopPropagation()">
+    <span class="popup-close" onclick="closeImpressumPopup()">&times;</span>
+<h2>
+  <span class="de-text" style="display:none;">Impressum</span>
+  <span class="en-text">Legal Notice</span>
+</h2>
+<p>
+  <span class="de-text" style="display:none;">
+    Die Rechte für Texte und Bilder dieser Webseite liegen bei:<br><br>
+    
+    SwissFourParts<br>
+    Frohburgstrasse 142<br>
+    8057 Zürich<br><br>
+
+    Inhaber: Elias Müller<br><br>
+  
+    Kontakt für Fragen zur Website:<br>
+    Telefon: +41 76 320 78 00<br>
+    E-Mail: elias.leitgeweger@gmx.ch<br>
+  </span>
+  <span class="en-text">
+The rights to the texts and images on this website are held by:<br><br>
+SwissFourParts<br>
+Frohburgstrasse 142<br>
+8057 Zurich<br><br>
+Owner: Elias Müller<br><br>
+Contact for questions regarding the website:<br>
+Phone: +41 76 320 78 00<br>
+E-Mail: elias.leitgeweger@gmx.ch
+  </span>
+</p>
   </div>
 </div>
 
@@ -374,7 +565,21 @@
 
   <!-- Footer -->
   <footer style="margin-top:50px; padding:20px; border-top:1px solid #ccc; text-align:center; font-size:0.9em; color:#444;">
-    <p><a href="#" onclick="openAboutPopup()">About Us</a></p>
+
+<div class="footer-links">
+  <a href="#" onclick="openAboutPopup()">
+    <span class="de-text" style="display:none;">Über uns</span>
+    <span class="en-text">About Us</span>
+  </a>
+  <a href="#" onclick="openAgbPopup()">
+    <span class="de-text" style="display:none;">AGBs</span>
+    <span class="en-text">Terms & Conditions</span>
+  </a>
+  <a href="#" onclick="openImpressumPopup()">
+    <span class="de-text" style="display:none;">Impressum</span>
+    <span class="en-text">Legal Notice</span>
+  </a>
+</div>
 
     <p><strong>SwissFourParts</strong><br>
     Frohburgstrasse 142<br>
@@ -388,6 +593,7 @@
 
 
 </html>
+
 
 
 
