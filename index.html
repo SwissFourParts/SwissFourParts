@@ -123,6 +123,7 @@
       text-decoration: underline;
     }
   </style>
+
   <meta name="viewport" content="width=device-width, initial-scale=0.6">
 </head>
 
@@ -453,6 +454,7 @@ function updateOrderSummary() {
   }
 
   document.getElementById('order-summary-text').textContent = summaryText;
+  let encodedBody = encodeURIComponent(emailBody.replace(/\n/g, "\r\n"));
   document.getElementById('send-email-button').href =
     `mailto:elias.leitgeweger@gmx.ch?subject=${emailSubject}&body=${encodeURIComponent(emailBody)}`;
 }
@@ -657,6 +659,7 @@ E-Mail: elias.leitgeweger@gmx.ch
 
 
 </html>
+
 
 
 
