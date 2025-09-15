@@ -104,6 +104,11 @@
     text-decoration: underline;
 }
 
+#agb-popup .popup-content,
+#impressum-popup .popup-content {
+  text-align: left;
+}
+
 
     .footer-links {
       display: flex;
@@ -309,8 +314,8 @@
         name_de: "Kickstartergummi",
         name_en: "Rubber kickstarter",
         price: 3.5,
-        description_de: "Replika Ersatzteil",
-        description_en: "Replica spare part",
+        description_de: "originales Ersatzteil",
+        description_en: "original spare part",
         image: "images/kickstartergummi.jpg",
         categories: ["CB750"]
       }
@@ -519,14 +524,18 @@ function updateOrderSummary() {
 </h2>
 <p>
   <span class="de-text" style="display:none;">
-    SwissFourParts wird von einem Honda-CB-Enthusiasten aus der Schweiz betrieben.  
-    Ich restauriere, fahre und sammle CB-Motorräder – und verkaufe originale und Repro-Teile, die ich selbst verwende.  
-    Mein Ziel ist es, anderen Fahrern zu helfen, ihre klassischen Hondas am Leben zu erhalten.
+    Willkommen in unserem Shop!<br>
+    Wir sind spezialisiert auf Ersatzteile für die legendären Honda CB-Modelle aus den 1970er-Jahren, wobei unser Schwerpunkt auf der Honda CB750 Four liegt.  
+    Unser Ziel ist es, Motorradbegeisterten in der Schweiz schnell, zuverlässig und preiswert die passenden Teile zu liefern.  
+    Neben unserem eigenen Shop finden Sie unsere Angebote auch auf <a href="https://www.ricardo.ch/de/shop/SwissFourParts/offers/" target="_blank" rel="noopener noreferrer">Ricardo</a>.<br><br>
+    Wenn Sie Fragen zu einem Teil, zur Verfügbarkeit oder zum Versand hast, melde Sie sich gerne per E-Mail oder Telefon.
   </span>
   <span class="en-text">
-    SwissFourParts is run by a Honda CB enthusiast from Switzerland.  
-    I restore, ride, and collect CB motorcycles — and sell original and reproduction parts I use myself.  
-    My goal is to help other riders keep their classic Hondas alive.
+      Welcome to our shop!<br>
+  We specialize in spare parts for the legendary Honda CB models from the 1970s, with our main focus on the Honda CB750 Four.  
+  Our goal is to provide motorcycle enthusiasts in Switzerland with the right parts quickly, reliably, and at fair prices.  
+  In addition to our own shop, you can also find our offers on <a href="https://www.ricardo.ch/de/shop/SwissFourParts/offers/" target="_blank" rel="noopener noreferrer">Ricardo</a>.<br><br>
+  If you have questions about a part, availability, or shipping, please feel free to contact us by e-mail or phone.
   </span>
 </p>
     
@@ -669,15 +678,15 @@ E-Mail: elias.leitgeweger@gmx.ch
   <footer style="margin-top:50px; padding:20px; border-top:1px solid #ccc; text-align:center; font-size:0.9em; color:#444;">
 
 <div class="footer-links">
-  <a href="#" onclick="openAboutPopup()">
+  <a href="javascript:void(0)" onclick="openAboutPopup()">
     <span class="de-text" style="display:none;">Über uns</span>
     <span class="en-text">About Us</span>
   </a>
-  <a href="#" onclick="openAgbPopup()">
+  <a href="javascript:void(0)" onclick="openAgbPopup()">
     <span class="de-text" style="display:none;">AGBs</span>
     <span class="en-text">Terms & Conditions</span>
   </a>
-  <a href="#" onclick="openImpressumPopup()">
+  <a href="javascript:void(0)" onclick="openImpressumPopup()">
     <span class="de-text" style="display:none;">Impressum</span>
     <span class="en-text">Legal Notice</span>
   </a>
@@ -695,6 +704,7 @@ E-Mail: elias.leitgeweger@gmx.ch
 
 
 </html>
+
 
 
 
