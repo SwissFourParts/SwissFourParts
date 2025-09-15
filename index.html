@@ -81,6 +81,12 @@
       white-space: pre-line; font-family: monospace;
       max-width: 700px; margin-left: auto; margin-right: auto;
     }
+    #order-summary-text {
+      font-family: monospace;
+      font-size: 1.1em;   /* etwas grösser */
+      line-height: 1.6em;  /* mehr Zeilenabstand */
+      white-space: pre;    /* Tabs wirken korrekt */
+    }
     #send-email-button {
       display: inline-block; margin-top: 12px; padding: 10px 18px;
       border-radius: 5px; background-color: #444;
@@ -176,6 +182,31 @@
       <div id="popup-text"></div>
     </div>
   </div>
+
+<!-- How to order -->
+<div id="how-to-order" style="margin:20px auto; max-width:700px; text-align:left; color:black;">
+  <p class="de-text" style="display:none;">
+    <strong>So bestellen Sie:</strong><br>
+    Wählen Sie die gewünschten Produkte aus und passen Sie die Anzahl mit den +/– Buttons an.  
+    In der Bestellübersicht sehen Sie eine Zusammenfassung.  
+    Klicken Sie auf „Bestellung senden“, um uns direkt per E-Mail zu kontaktieren.  
+    Alternativ können Sie den Bestelltext auch kopieren und selbst per E-Mail oder WhatsApp versenden.  
+    Nach Eingang Ihrer Bestellung erhalten Sie eine Bestätigung mit den Zahlungsinformationen.
+  </p>
+  <p class="en-text">
+    <strong>How to order:</strong><br>
+    Select the products you want and adjust the quantity using the +/– buttons.  
+    The order summary will show your selection.  
+    Click “Send order” to contact us directly via e-mail.  
+    Alternatively, you can copy the order text and send it yourself via e-mail or WhatsApp.  
+    Once your order is received, you will get a confirmation with payment details.
+  </p>
+
+  <p style="margin-top:15px; font-weight:bold;">
+    E-Mail: <a href="mailto:elias.leitgeweger@gmx.ch">elias.leitgeweger@gmx.ch</a><br>
+    WhatsApp / Telefon: <a href="tel:+41763207800">+41 76 320 78 00</a>
+  </p>
+</div>
 
   <script>
     // -------------------------
@@ -360,38 +391,70 @@ function setLanguage(lang) {
     function decreaseQuantity(i) { if (quantities[i] > 0) { quantities[i]--; updateQuantityDisplay(i); updateOrderSummary(); } }
     function updateQuantityDisplay(i) { document.getElementById('qty-' + i).textContent = quantities[i]; }
 
-    function updateOrderSummary() {
-      let summaryTitle = language === 'de' ? 'Bestellübersicht' : 'Order summary';
-      let productLabel = language === 'de' ? 'Produkt' : 'Product';
-      let quantityLabel = language === 'de' ? 'Anzahl' : 'Quantity';
-      let noItemsText = language === 'de' ? 'Keine Produkte ausgewählt.' : 'No products selected.';
 
-      let emailSubject = encodeURIComponent(language === 'de' ? 'Bestellung SwissFourParts' : 'Order SwissFourParts');
-      let emailBody = summaryTitle + ':\n\n';
-      let hasItems = false;
+function updateOrderSummary() {
+  let productLabel = language === 'de' ? 'Produkt' : 'Product';
+  let quantityLabel = language === 'de' ? 'Anzahl' : 'Qty';
+  let priceLabel = language === 'de' ? 'Preis' : 'Price';
+  let shippingLabel = language === 'de' ? 'Versandkosten' : 'Shipping';
+  let totalLabel = language === 'de' ? 'Gesamttotal' : 'Total';
+  let noItemsText = language === 'de' ? 'Keine Produkte ausgewählt.' : 'No products selected.';
 
-      products.forEach((p, i) => {
-        if (quantities[i] > 0) {
-          hasItems = true;
-          emailBody += `${productLabel}: ${language === 'de' ? p.name_de : p.name_en}\n${quantityLabel}: ${quantities[i]}\n\n`;
-        }
-      });
+  let emailSubject = encodeURIComponent(language === 'de' ? 'Bestellung SwissFourParts' : 'Order SwissFourParts');
+  let emailBody = (language === 'de' ? 'Bestellübersicht' : 'Order summary') + ':\n\n';
+  let hasItems = false;
+  let summaryText = "";
+  let total = 0;
+  const shippingCost = 8.5;
 
-      if (!hasItems) emailBody += noItemsText;
-      emailBody = encodeURIComponent(emailBody);
+  // Spaltenbreiten (anpassen nach Wunsch)
+  const col1 = 36; // Produktname
+  const col2 = 10;  // Anzahl
+  const col3 = 12; // Preis
 
-      let summaryText = !hasItems ? noItemsText : "";
-      if (hasItems) {
-        products.forEach((p, i) => {
-          if (quantities[i] > 0) {
-            summaryText += `${language === 'de' ? p.name_de : p.name_en} x ${quantities[i]}\n`;
-          }
-        });
-      }
-      document.getElementById('order-summary-text').textContent = summaryText;
+  // Kopfzeile
+  summaryText += productLabel.padEnd(col1) + quantityLabel.padEnd(col2) + priceLabel.padEnd(col3) + "\n";
+  summaryText += "-".repeat(col1 + col2 + col3) + "\n";
 
-      document.getElementById('send-email-button').href = `mailto:elias.leitgeweger@gmx.ch?subject=${emailSubject}&body=${emailBody}`;
+  // Produkte
+  products.forEach((p, i) => {
+    if (quantities[i] > 0) {
+      hasItems = true;
+      let lineTotal = p.price * quantities[i];
+      total += lineTotal;
+
+      let name = language === 'de' ? p.name_de : p.name_en;
+      let qty = String(quantities[i]);
+      let price = `CHF ${lineTotal.toFixed(2)}`;
+
+      summaryText += name.padEnd(col1) + qty.padEnd(col2) + price.padEnd(col3) + "\n";
+
+      emailBody += `${productLabel}: ${name}\n${quantityLabel}: ${qty}\n${priceLabel}: ${price}\n\n`;
     }
+  });
+
+  if (!hasItems) {
+    summaryText = noItemsText;
+    emailBody += noItemsText;
+  } else {
+    // Versand + Total
+    total += shippingCost;
+    let shipping = `CHF ${shippingCost.toFixed(2)}`;
+    let grandTotal = `CHF ${total.toFixed(2)}`;
+
+    summaryText += "\n";
+    summaryText += shippingLabel.padEnd(col1 + col2) + shipping.padEnd(col3) + "\n";
+    summaryText += "-".repeat(col1 + col2 + col3) + "\n";
+    summaryText += totalLabel.padEnd(col1 + col2) + grandTotal.padEnd(col3) + "\n";
+
+    emailBody += `${shippingLabel}: ${shipping}\n`;
+    emailBody += `${totalLabel}: ${grandTotal}\n`;
+  }
+
+  document.getElementById('order-summary-text').textContent = summaryText;
+  document.getElementById('send-email-button').href =
+    `mailto:elias.leitgeweger@gmx.ch?subject=${emailSubject}&body=${encodeURIComponent(emailBody)}`;
+}
 
     // -------------------------
     // INITIALIZE
