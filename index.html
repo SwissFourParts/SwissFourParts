@@ -1,157 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7eac6;
-      color: black;
-      max-width: 1000px;
-      margin: 20px auto;
-      padding: 0 15px;
-      box-shadow: 0 0 0 9999px white;
-    }
-    h1 { text-align: center; margin-bottom: 30px; }
-
-    #filter-buttons, #language-buttons {
-      display: flex; justify-content: center; gap: 15px;
-      margin-bottom: 20px; flex-wrap: wrap;
-    }
-    button {
-      padding: 8px 14px; border: 2px solid #444;
-      background: white; cursor: pointer;
-      font-weight: bold; border-radius: 4px;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    button.active { background-color: #444; color: white; }
-
-    .product {
-      display: flex; align-items: center;
-      border-bottom: 1px solid #ccc;
-      padding: 15px 0; cursor: pointer;
-      position: relative;
-    }
-    .product img {
-      max-width: 240px; max-height: 160px;
-      margin-right: 30px; border: 1px solid #ddd;
-      padding: 3px; background: #f9f9f9;
-      pointer-events: none;
-    }
-    .product-details { max-width: 520px; pointer-events: none; }
-    .product-details strong { font-size: 1.1em; }
-
-    .quantity-controls {
-      display: flex; align-items: center; gap: 8px;
-      position: absolute; right: 15px; top: 50%;
-      transform: translateY(-50%); pointer-events: auto;
-    }
-    .quantity-controls button {
-      width: 28px; height: 28px; padding: 0;
-      font-size: 20px; line-height: 20px; text-align: center;
-      user-select: none;
-    }
-    .quantity-controls span {
-      min-width: 22px; text-align: center; display: inline-block;
-      font-weight: bold; font-size: 16px;
-    }
-
-    p.contact { text-align: center; margin-top: 40px; font-style: italic; }
-    a { color: #0000ee; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    .popup-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6); display: none;
-      justify-content: center; align-items: center; z-index: 1000;
-    }
-    .popup-content {
-      background: white; padding: 40px; max-width: 700px; width: 90%;
-      border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.3);
-      position: relative; text-align: center;
-    }
-    .popup-close {
-      position: absolute; top: 5px; right: 15px;
-      font-size: 36px; font-weight: bold; cursor: pointer;
-    }
-    .popup-content img { max-width: 100%; height: auto; margin-bottom: 15px; }
-
-    #order-summary {
-      margin-top: 30px; padding: 20px;
-      border: 1px solid #444; border-radius: 6px; background: #fff;
-      white-space: pre-line; font-family: monospace;
-      max-width: 700px; margin-left: auto; margin-right: auto;
-    }
-    #order-summary-text {
-      font-family: monospace;
-      font-size: 1.1em;   /* etwas grösser */
-      line-height: 1.6em;  /* mehr Zeilenabstand */
-      white-space: pre;    /* Tabs wirken korrekt */
-    }
-    #send-email-button {
-      display: inline-block; margin-top: 12px; padding: 10px 18px;
-      border-radius: 5px; background-color: #444;
-      color: white; text-decoration: none; font-weight: bold;
-    }
-    #send-email-button:hover { background-color: #222; }
-
-#language-selection a {
-    color: black;
-    text-decoration: none;
-    padding: 2px 6px;
-}
-#language-selection a.active {
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-#agb-popup .popup-content,
-#impressum-popup .popup-content {
-  text-align: left;
-}
-
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 100px;              /* Abstand zwischen den Links */
-      margin-bottom: 25px;    /* Abstand zu den Kontaktdaten darunter */
-      font-size: 1.1em;       /* größere Schrift */
-    }
-
-    .footer-links a {
-      text-decoration: none;
-      color: #5f162b;         /* gleiche Farbe wie bisher */
-      font-weight: bold;
-    }
-
-    .footer-links a:hover {
-      text-decoration: underline;
-    }
-  </style>
-
-  <meta name="viewport" content="width=device-width, initial-scale=0.5">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwissFourParts</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
-
-
-
 <body>
-<div id="header" style="position: relative; margin-bottom:40px; height:140px; background: #f7eac6; padding: 0 15px;">
-  <div style="position: absolute; left: 50%; transform: translateX(-50%); top: 10px; background: white; padding: 0px 0px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius:6px;">
-    <img src="images/sfp_logo_mit_schrift.png" alt="SwissFourParts" style="max-height:140px; width:auto;">
+
+  <div id="header">
+    <div class="logo-container">
+      <img src="images/sfp_logo_mit_schrift.png" alt="SwissFourParts">
+    </div>
+
+    <div id="language-selection">
+      <a href="#" id="lang-de" class="active" onclick="setLanguage('de')">Deutsch</a> | 
+      <a href="#" id="lang-en" onclick="setLanguage('en')">English</a>
+    </div>
   </div>
 
-  <div id="language-selection" style="position: absolute; right: 0; top: 0; font-weight:bold; font-size:1em; line-height:140px; padding-right:10px;">
-    <a href="#" id="lang-de" class="active" onclick="setLanguage('de')">Deutsch</a> | 
-    <a href="#" id="lang-en" onclick="setLanguage('en')">English</a>
-  </div>
-</div>
-
-
-
-
-
-  <!-- Filter buttons -->
   <div id="filter-buttons">
     <button id="filter-alle" class="active" onclick="filterProducts('alle')">
       <span class="de-text">Alle anzeigen</span>
@@ -171,17 +38,17 @@
     </button>
   </div>
 
-  <!-- Product list generated dynamically -->
   <div id="product-list"></div>
 
-  <!-- Order summary -->
+  <div id="pagination-controls"></div>
+
+
   <div id="order-summary">
     <strong id="order-summary-title">Bestellübersicht</strong><br>
     <pre id="order-summary-text">Keine Produkte ausgewählt.</pre>
-    <a id="send-email-button" href="mailto:elias.leitgeweger@gmx.ch?subject=Bestellung%20SwissFourParts&body=Keine%20Produkte%20ausgew%C3%A4hlt." target="_blank" rel="noopener noreferrer">Bestellung senden</a>
+    <a id="send-email-button" href="#" target="_blank" rel="noopener noreferrer">Bestellung senden</a>
   </div>
 
-  <!-- Popup -->
   <div id="popup" class="popup-overlay" onclick="closePopup()">
     <div class="popup-content" onclick="event.stopPropagation()">
       <span class="popup-close" onclick="closePopup()">&times;</span>
@@ -190,555 +57,185 @@
     </div>
   </div>
 
-<!-- How to order -->
-<div id="how-to-order" style="margin:20px auto; max-width:700px; text-align:left; color:black;">
-  <p class="de-text" style="display:none;">
-    <strong>So bestellen Sie:</strong><br>
-    Wählen Sie die gewünschten Produkte aus und passen Sie die Anzahl mit den +/– Buttons an.  
-    In der Bestellübersicht sehen Sie eine Zusammenfassung.  
-    Klicken Sie auf „Bestellung senden“, um uns direkt per E-Mail zu kontaktieren.  
-    Alternativ können Sie den Bestelltext auch kopieren und selbst per E-Mail oder WhatsApp versenden.  
-    Nach Eingang Ihrer Bestellung erhalten Sie eine Bestätigung mit den Zahlungsinformationen.
-  </p>
-  <p class="en-text">
-    <strong>How to order:</strong><br>
-    Select the products you want and adjust the quantity using the +/– buttons.  
-    The order summary will show your selection.  
-    Click “Send order” to contact us directly via e-mail.  
-    Alternatively, you can copy the order text and send it yourself via e-mail or WhatsApp.  
-    Once your order is received, you will get a confirmation with payment details.
-  </p>
+  <div id="how-to-order">
+    <p class="de-text" style="display:none;">
+      <strong>So bestellen Sie:</strong><br>
+      Wählen Sie die gewünschten Produkte aus und passen Sie die Anzahl mit den +/– Buttons an.  
+      In der Bestellübersicht sehen Sie eine Zusammenfassung.  
+      Klicken Sie auf „Bestellung senden“, um uns direkt per E-Mail zu kontaktieren.  
+      Alternativ können Sie den Bestelltext auch kopieren und selbst per E-Mail oder WhatsApp versenden.  
+      Nach Eingang Ihrer Bestellung erhalten Sie eine Bestätigung mit den Zahlungsinformationen.
+    </p>
+    <p class="en-text">
+      <strong>How to order:</strong><br>
+      Select the products you want and adjust the quantity using the +/– buttons.  
+      The order summary will show your selection.  
+      Click “Send order” to contact us directly via e-mail.  
+      Alternatively, you can copy the order text and send it yourself via e-mail or WhatsApp.  
+      Once your order is received, you will get a confirmation with payment details.
+    </p>
 
-  <p style="margin-top:15px; font-weight:bold;">
-    E-Mail: <a href="mailto:elias.leitgeweger@gmx.ch">elias.leitgeweger@gmx.ch</a><br>
-    WhatsApp / Telefon: <a href="tel:+41763207800">+41 76 320 78 00</a>
-  </p>
-</div>
+    <p style="margin-top:15px; font-weight:bold;">
+      E-Mail: <a href="mailto:elias.leitgeweger@gmx.ch">elias.leitgeweger@gmx.ch</a><br>
+      WhatsApp / Telefon: <a href="tel:+41763207800">+41 76 320 78 00</a>
+    </p>
+  </div>
 
-  <script>
-    // -------------------------
-    // PRODUCT DATA
-    // -------------------------
-    const products = [
-      {
-        name_de: "CB750 Zündkerze (NGK D8EA)",
-        name_en: "CB750 Spark plug (NGK D8EA)",
-        price: 5.5,
-        description_de: "NGK",
-        description_en: "NGK",
-        image: "images/zündkerze.jpg",
-        categories: ["CB750"]
-      },
-      {
-        name_de: "CB750 Zündkerzenstecker Set",
-        name_en: "CB750 Spark plug cap set",
-        price: 40,
-        description_de: "NGK",
-        description_en: "NGK",
-        image: "images/kerzenstecker.jpg",
-        categories: ["CB750"]
-      },
-      {
-        name_de: "CB750 Ölfilter",
-        name_en: "CB750 Oil filter",
-        price: 8,
-        description_de: "Ölfilter und Dichtung",
-        description_en: "Oilfilter and O-ring",
-        image: "images/oilfilter.jpg",
-        categories: ["CB750", "CB550K"]
-      },
-      {
-        name_de: "CB750 Dichtring Vorderbremse",
-        name_en: "CB750 Front Brake Piston Seal",
-        price: 9.5,
-        description_de: "originales Ersatzteil",
-        description_en: "original spare part",
-        image: "images/dichtring_bremse.jpg",
-        categories: ["CB750"]
-      },
-      {
-        name_de: "CB750 Reparatur Set Vergaser",
-        name_en: "CB750 Carburetor rebuild kit",
-        price: 84,
-        description_de: "beinhalted Teile für alle vier Vergaser",
-        description_en: "includes parts for all four carburetors",
-        image: "images/vergaser_kit.jpg",
-        categories: ["CB750"]
-      },
-      {
-        name_de: "CB750 Kupplungshebel",
-        name_en: "CB750 Clutch lever",
-        price: 18,
-        description_de: "originales Ersatzteil",
-        description_en: "original spare part",
-        image: "images/kupplungshebel.jpg",
-        categories: ["CB750"]
-      },
-      {
-        name_de: "CB750 Lenkermutter",
-        name_en: "CB750 Steering stem nut",
-        price: 9.5,
-        description_de: "originales Ersatzteil",
-        description_en: "original spare part",
-        image: "images/lenkermutter.jpg",
-        categories: ["CB750", "CB550K"]
-      },
-      {
-        name_de: "CB750 Chrom Scheinwerferhalter",
-        name_en: "CB750 Chrome headlight bracket",
-        price: 119,
-        description_de: "Replika Ersatzteil",
-        description_en: "replica spare part",
-        image: "images/scheinwerferhalter.jpg",
-        categories: ["CB750"]
-      },
-      {
-        name_de: "CB750 Sticker: Reifeninformation",
-        name_en: "CB750 Sticker: Tire info",
-        price: 4.5,
-        description_de: "Sticker",
-        description_en: "Sticker",
-        image: "images/tire_sticker.jpg",
-        categories: ["CB750"]
-      },
-      {
-        name_de: "CB750 Sticker: Helmet holder",
-        name_en: "CB750 Sticker: Helmet holder",
-        price: 3.2,
-        description_de: "Sticker",
-        description_en: "Sticker",
-        image: "images/sticker_helmet.jpg",
-        categories: ["CB750"]
-      },
-      {
-        name_de: "CB750 K1 Tankemblem Kit",
-        name_en: "CB750 K1 Tank Emblem Kit",
-        price: 85,
-        description_de: "originales Ersatzteil",
-        description_en: "original spare part",
-        image: "images/tank_emblem_set.jpg",
-        categories: ["CB750"]
-      },
-      {
-        name_de: "CB750 Emblem links",
-        name_en: "CB750 Emblem left",
-        price: 45,
-        description_de: "originales Ersatzteil",
-        description_en: "original spare part",
-        image: "images/emblem_links.jpg",
-        categories: ["CB750"]
-      },
-      {
-        name_de: "CB750 Emblem rechts",
-        name_en: "CB750 Emblem right",
-        price: 45,
-        description_de: "originales Ersatzteil",
-        description_en: "original spare part",
-        image: "images/emblem_rechts.jpg",
-        categories: ["CB750"]
-      },
-      {
-        name_de: "Hupenknopf",
-        name_en: "Horn button",
-        price: 10,
-        description_de: "Replika Ersatzteil",
-        description_en: "Replica spare part",
-        image: "images/hupenknopf.jpg",
-        categories: ["CB125T", "CB750", "CB550K"]
-      },
-      {
-        name_de: "Kickstartergummi",
-        name_en: "Rubber kickstarter",
-        price: 3.5,
-        description_de: "originales Ersatzteil",
-        description_en: "original spare part",
-        image: "images/kickstartergummi.jpg",
-        categories: ["CB750"]
-      }
-      // ➕ Add more products here
-    ];
-
-    // Quantities
-    let quantities = new Array(products.length).fill(0);
-    let language = 'de';
-
-    // -------------------------
-    // RENDER FUNCTIONS
-    // -------------------------
-    function renderProducts() {
-      const container = document.getElementById("product-list");
-      container.innerHTML = "";
-
-      products.forEach((p, index) => {
-        const productDiv = document.createElement("div");
-        productDiv.className = "product " + p.categories.join(" ");
-        productDiv.onclick = () =>
-          openPopup(p.image, p.name_en, {
-            de: `<strong>${p.name_de}</strong><br>${p.description_de}<br>Preis: CHF ${p.price}`,
-            en: `<strong>${p.name_en}</strong><br>${p.description_en}<br>Price: CHF ${p.price}`
-          });
-
-        productDiv.innerHTML = `
-          <img src="${p.image}" alt="${p.name_en}">
-          <div class="product-details">
-            <strong class="de-text">${p.name_de}</strong>
-            <strong class="en-text" style="display:none;">${p.name_en}</strong><br>
-            <span class="de-text">${p.description_de}</span>
-            <span class="en-text" style="display:none;">${p.description_en}</span><br>
-            <span class="de-text">Preis: CHF ${p.price}</span>
-            <span class="en-text" style="display:none;">Price: CHF ${p.price}</span>
-          </div>
-          <div class="quantity-controls" onclick="event.stopPropagation()">
-            <button onclick="decreaseQuantity(${index})">-</button>
-            <span id="qty-${index}">0</span>
-            <button onclick="increaseQuantity(${index})">+</button>
-          </div>
-        `;
-        container.appendChild(productDiv);
-      });
-    }
-
-    // -------------------------
-    // UI FUNCTIONS
-    // -------------------------
-function setLanguage(lang) {
-    language = lang;
-
-    // Sprachauswahl links/rechts
-    document.getElementById('lang-de')?.classList.toggle('active', lang === 'de');
-    document.getElementById('lang-en')?.classList.toggle('active', lang === 'en');
-
-    // Alle Texte wechseln
-    document.querySelectorAll('.de-text').forEach(el => el.style.display = (lang === 'de') ? '' : 'none');
-    document.querySelectorAll('.en-text').forEach(el => el.style.display = (lang === 'en') ? '' : 'none');
-
-    // Filterbuttons Texte anpassen
-    ['filter-alle','filter-cb750','filter-cb550k','filter-cb125t',
-     'condition-new','condition-used'].forEach(id => {
-        const btn = document.getElementById(id);
-        if(btn){
-            btn.querySelectorAll('span.de-text').forEach(el => el.style.display = (lang==='de')?'':'none');
-            btn.querySelectorAll('span.en-text').forEach(el => el.style.display = (lang==='en')?'':'none');
-        }
-    });
-
-    // Order summary Texte
-    document.getElementById('order-summary-title').textContent = (lang==='de') ? 'Bestellübersicht' : 'Order summary';
-    document.getElementById('send-email-button').textContent = (lang==='de') ? 'Bestellung senden' : 'Send order';
-
-    updateOrderSummary();
-}
-
-    function filterProducts(filter) {
-      ['filter-alle','filter-cb750','filter-cb550k','filter-cb125t'].forEach(id => {
-        document.getElementById(id).classList.toggle('active', id === 'filter-' + filter.toLowerCase());
-      });
-      document.querySelectorAll('.product').forEach(p => {
-        p.style.display = (filter === 'alle' || p.classList.contains(filter)) ? '' : 'none';
-      });
-    }
-
-    function openPopup(imgSrc, altText, textObj) {
-      document.getElementById('popup-img').src = imgSrc;
-      document.getElementById('popup-img').alt = altText;
-      document.getElementById('popup-text').innerHTML = language === 'de' ? textObj.de : textObj.en;
-      document.getElementById('popup').style.display = 'flex';
-    }
-    function closePopup() { document.getElementById('popup').style.display = 'none'; }
-
-    function openAboutPopup() {
-      document.getElementById('about-popup').style.display = 'flex';
-    }
-    function closeAboutPopup() {
-      document.getElementById('about-popup').style.display = 'none';
-    }
-    function openAgbPopup() {
-      document.getElementById('agb-popup').style.display = 'flex';
-    }
-    function closeAgbPopup() {
-      document.getElementById('agb-popup').style.display = 'none';
-    }
-
-    function openImpressumPopup() {
-      document.getElementById('impressum-popup').style.display = 'flex';
-    }
-    function closeImpressumPopup() {
-      document.getElementById('impressum-popup').style.display = 'none';
-    }
-
-    function increaseQuantity(i) { quantities[i]++; updateQuantityDisplay(i); updateOrderSummary(); }
-    function decreaseQuantity(i) { if (quantities[i] > 0) { quantities[i]--; updateQuantityDisplay(i); updateOrderSummary(); } }
-    function updateQuantityDisplay(i) { document.getElementById('qty-' + i).textContent = quantities[i]; }
-
-
-function updateOrderSummary() {
-  let productLabel = language === 'de' ? 'Produkt' : 'Product';
-  let quantityLabel = language === 'de' ? 'Anzahl' : 'Qty';
-  let priceLabel = language === 'de' ? 'Preis' : 'Price';
-  let shippingLabel = language === 'de' ? 'Versandkosten' : 'Shipping';
-  let totalLabel = language === 'de' ? 'Gesamttotal' : 'Total';
-  let noItemsText = language === 'de' ? 'Keine Produkte ausgewählt.' : 'No products selected.';
-
-  let emailSubject = encodeURIComponent(language === 'de' ? 'Bestellung SwissFourParts' : 'Order SwissFourParts');
-  let emailBody = (language === 'de' ? 'Bestellübersicht' : 'Order summary') + ':\n\n';
-  let hasItems = false;
-  let summaryText = "";
-  let total = 0;
-  const shippingCost = 8.5;
-
-  // Spaltenbreiten (anpassen nach Wunsch)
-  const col1 = 36; // Produktname
-  const col2 = 10;  // Anzahl
-  const col3 = 12; // Preis
-
-  // Kopfzeile
-  summaryText += productLabel.padEnd(col1) + quantityLabel.padEnd(col2) + priceLabel.padEnd(col3) + "\n";
-  summaryText += "-".repeat(col1 + col2 + col3) + "\n";
-
-  // Produkte
-  products.forEach((p, i) => {
-    if (quantities[i] > 0) {
-      hasItems = true;
-      let lineTotal = p.price * quantities[i];
-      total += lineTotal;
-
-      let name = language === 'de' ? p.name_de : p.name_en;
-      let qty = String(quantities[i]);
-      let price = `CHF ${lineTotal.toFixed(2)}`;
-
-      summaryText += name.padEnd(col1) + qty.padEnd(col2) + price.padEnd(col3) + "\n";
-
-      emailBody += `${productLabel}: ${name}\n${quantityLabel}: ${qty}\n${priceLabel}: ${price}\n\n`;
-    }
-  });
-
-  if (!hasItems) {
-    summaryText = noItemsText;
-    emailBody += noItemsText;
-  } else {
-    // Versand + Total
-    total += shippingCost;
-    let shipping = `CHF ${shippingCost.toFixed(2)}`;
-    let grandTotal = `CHF ${total.toFixed(2)}`;
-
-    summaryText += "\n";
-    summaryText += shippingLabel.padEnd(col1 + col2) + shipping.padEnd(col3) + "\n";
-    summaryText += "-".repeat(col1 + col2 + col3) + "\n";
-    summaryText += totalLabel.padEnd(col1 + col2) + grandTotal.padEnd(col3) + "\n";
-
-    emailBody += `${shippingLabel}: ${shipping}\n`;
-    emailBody += `${totalLabel}: ${grandTotal}\n`;
-  }
-
-  document.getElementById('order-summary-text').textContent = summaryText;
-  let encodedBody = encodeURIComponent(emailBody.replace(/\n/g, "\r\n"));
-  document.getElementById('send-email-button').href =
-    `mailto:elias.leitgeweger@gmx.ch?subject=${emailSubject}&body=${encodeURIComponent(emailBody)}`;
-}
-
-    // -------------------------
-    // INITIALIZE
-    // -------------------------
-    window.onload = () => {
-      renderProducts();
-      setLanguage('de');
-      filterProducts('alle');
-      updateOrderSummary();
-    };
-  </script>
-
-
-
-<!-- About Us Popup -->
-<div id="about-popup" class="popup-overlay" onclick="closeAboutPopup()">
-  <div class="popup-content" onclick="event.stopPropagation()">
-    <span class="popup-close" onclick="closeAboutPopup()">&times;</span>
-    
-<h2>
-  <span class="de-text" style="display:none;">Über SwissFourParts</span>
-  <span class="en-text">About SwissFourParts</span>
-</h2>
-<p>
-  <span class="de-text" style="display:none;">
-    Willkommen in unserem Shop!<br>
-    Wir sind spezialisiert auf Ersatzteile für die legendären Honda CB-Modelle aus den 1970er-Jahren, wobei unser Schwerpunkt auf der Honda CB750 Four liegt.  
-    Unser Ziel ist es, Motorradbegeisterten in der Schweiz schnell, zuverlässig und preiswert die passenden Teile zu liefern.  
-    Neben unserem eigenen Shop finden Sie unsere Angebote auch auf <a href="https://www.ricardo.ch/de/shop/SwissFourParts/offers/" target="_blank" rel="noopener noreferrer">Ricardo</a>.<br><br>
-    Wenn Sie Fragen zu einem Teil, zur Verfügbarkeit oder zum Versand hast, melde Sie sich gerne per E-Mail oder Telefon.
-  </span>
-  <span class="en-text">
-      Welcome to our shop!<br>
-  We specialize in spare parts for the legendary Honda CB models from the 1970s, with our main focus on the Honda CB750 Four.  
-  Our goal is to provide motorcycle enthusiasts in Switzerland with the right parts quickly, reliably, and at fair prices.  
-  In addition to our own shop, you can also find our offers on <a href="https://www.ricardo.ch/de/shop/SwissFourParts/offers/" target="_blank" rel="noopener noreferrer">Ricardo</a>.<br><br>
-  If you have questions about a part, availability, or shipping, please feel free to contact us by e-mail or phone.
-  </span>
-</p>
-    
-    <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:40px;">
-      <img src="images/cb550.jpg" alt="Honda CB550" style="max-width:500px; border:1px solid #ccc;">
+  <footer>
+    <div class="footer-links">
+      <a href="javascript:void(0)" onclick="openAboutPopup()">
+        <span class="de-text" style="display:none;">Über uns</span>
+        <span class="en-text">About Us</span>
+      </a>
+      <a href="javascript:void(0)" onclick="openAgbPopup()">
+        <span class="de-text" style="display:none;">AGBs</span>
+        <span class="en-text">Terms & Conditions</span>
+      </a>
+      <a href="javascript:void(0)" onclick="openImpressumPopup()">
+        <span class="de-text" style="display:none;">Impressum</span>
+        <span class="en-text">Legal Notice</span>
+      </a>
     </div>
-  </div>
-</div>
 
-
-<!-- AGB Popup -->
-<div id="agb-popup" class="popup-overlay" onclick="closeAgbPopup()">
-  <div class="popup-content" onclick="event.stopPropagation()">
-    <span class="popup-close" onclick="closeAgbPopup()">&times;</span>
-<h2>
-  <span class="de-text" style="display:none;">AGBs</span>
-  <span class="en-text">Terms & Conditions</span>
-</h2>
-<p>
-  <span class="de-text" style="display:none;">
-  <strong>Gültigkeit</strong><br>
-  Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Bestellungen im Onlineshop von SwissFourParts. Mit Auftragserteilung anerkennt der Käufer diese Bedingungen. Abweichende Bestimmungen des Käufers haben keine Gültigkeit. Abholung der Ware ist nach Absprache in Zürich möglich.<br><br>
-
-  <strong>Preise</strong><br>
-  Alle Preise im Onlineshop verstehen sich in Schweizer Franken (CHF) und enthalten die gesetzliche Mehrwertsteuer (sofern anwendbar). Die Versandkosten werden im Bestellvorgang separat ausgewiesen. Preisänderungen bleiben vorbehalten.<br><br>
-
-  <strong>Lieferfristen</strong><br>
-  Bestellte Teile sind in der Regel an Lager. Der Lagerbestand wird nach Eingang der Bestellung überprüft; sollte ein Artikel oder eine gewünschte Menge nicht verfügbar sein, wird der Käufer informiert. Lieferungen innerhalb der Schweiz erfolgen in der Regel innert 2–5 Werktagen nach Zahlungseingang. Eine verspätete Lieferung entbindet nicht von der Abnahmeverpflichtung. Ansprüche aus Lieferverzug sind ausgeschlossen.<br><br>
-
-  <strong>Versand und Gefahrtragung</strong><br>
-  Die Versandkosten trägt der Käufer. Diese werden im Bestellvorgang ausgewiesen. Der Versand erfolgt auf Gefahr des Käufers. Sofern nicht anders vereinbart, wählt SwissFourParts die Versandart und den Versandweg nach bestem Ermessen, jedoch ohne Gewähr. Teillieferungen sind zulässig, sofern sie für eine rasche Abwicklung vorteilhaft erscheinen.<br><br>
-
-  <strong>Transportschäden</strong><br>
-  Transportschäden sind umgehend direkt bei der zuständigen Transportanstalt (z. B. Post, Paketdienst, Spedition) zu melden. Ohne Schadenmeldung des Transporteurs kann kein kostenloser Ersatz gewährt werden.<br><br>
-
-  <strong>Beanstandungen und Gewährleistung</strong><br>
-  Offensichtliche Mängel sind innerhalb von 14 Tagen nach Erhalt der Ware schriftlich geltend zu machen. Nach Ablauf dieser Frist gilt die Sendung als akzeptiert.<br>
-  Rücksendungen werden nur bei fehlerhafter Lieferung und nach vorheriger Absprache akzeptiert. Die Rücksendung muss in transportsicherer Verpackung und ausreichend frankiert erfolgen. Wir behalten uns vor, beschädigte Waren, die nicht mehr im Originalzustand eintreffen, ganz oder teilweise zu verrechnen.<br>
-  Bei berechtigten Beanstandungen verpflichtet sich SwissFourParts zu kostenloser Instandstellung, Ersatzlieferung oder Rechnungsnachlass. Soweit rechtlich zulässig, sind weitergehende Gewährleistungsansprüche ausgeschlossen. Die Gewährleistung entfällt, wenn der Käufer Änderungen oder Instandsetzungen ohne Zustimmung von SwissFourParts selbst oder durch Dritte vornimmt. Eine Haftung für Folgeschäden ist ausgeschlossen.<br><br>
-
-  <strong>Zahlungsbedingungen</strong><br>
-  Die Lieferung erfolgt ausschliesslich gegen Vorauskasse per Banküberweisung oder Twint. Die Ware wird erst nach Eingang der vollständigen Zahlung versendet.<br><br>
-
-  <strong>Lieferungen ins Ausland</strong><br>
-  Lieferungen ins Ausland sind nur nach vorheriger Absprache und ausschliesslich gegen Vorauskasse möglich.<br><br>
-
-  <strong>Datenschutz</strong><br>
-  Personenbezogene Kundendaten werden ausschliesslich im Rahmen der Bestellabwicklung verwendet und nicht an Dritte weitergegeben. Dabei werden die Bestimmungen des Schweizer Datenschutzgesetzes beachtet.<br><br>
-
-  <strong>Erfüllungsort und Gerichtsstand</strong><br>
-  Erfüllungsort für Lieferung und Zahlung sowie ausschliesslicher Gerichtsstand ist Zürich. Die Anwendung internationalen Kaufrechts ist ausgeschlossen.<br><br>
-
-  <strong>Schlussbestimmungen</strong><br>
-  Sollten einzelne Bestimmungen dieser AGB ganz oder teilweise unwirksam sein, bleibt die Gültigkeit der übrigen Bestimmungen unberührt. Irrtümer und Druckfehler bleiben vorbehalten.
-  </span>
-
-
-  <span class="en-text">
-  These Terms and Conditions (T&C) apply to all orders placed in the SwissFourParts online shop. By placing an order, the buyer accepts these conditions. Deviating terms of the buyer have no validity. Pickup of goods is possible in Zurich by prior arrangement.<br><br>
-
-  <strong>Prices</strong><br>
-  All prices in the online shop are in Swiss Francs (CHF) and include applicable VAT. Shipping costs are shown separately during the order process. Price changes are reserved.<br><br>
-
-  <strong>Delivery Times</strong><br>
-  Ordered parts are generally in stock. Stock is checked upon receipt of the order; if an item or the requested quantity is not available, the buyer will be informed. Deliveries within Switzerland usually take 2–5 business days after receipt of payment. Late delivery does not release the buyer from the obligation to accept the goods. Claims for delivery delays are excluded.<br><br>
-
-  <strong>Shipping and Risk</strong><br>
-  Shipping costs are borne by the buyer and are displayed during the order process. Delivery is at the buyer's risk. Unless otherwise agreed, SwissFourParts selects the shipping method and route at its discretion, without guarantee. Partial deliveries are allowed if they are advantageous for prompt order processing.<br><br>
-
-  <strong>Transport Damage</strong><br>
-  Transport damage must be reported immediately to the responsible transport company (e.g., post office, parcel service, freight forwarder). Without a damage report from the carrier, free replacement cannot be granted.<br><br>
-
-  <strong>Complaints and Warranty</strong><br>
-  Obvious defects must be reported in writing within 14 days after receipt of the goods. After this period, the shipment is considered accepted.<br>
-  Returns are only accepted in case of incorrect delivery and after prior arrangement. Returns must be in secure packaging and adequately prepaid. We reserve the right to charge for damaged goods that do not arrive in their original condition, wholly or partially.<br>
-  In the case of justified complaints, SwissFourParts undertakes free repair, replacement, or invoice reduction. As far as legally permissible, further warranty claims are excluded. Warranty is void if the buyer makes modifications or repairs without SwissFourParts' consent. Liability for consequential damages is excluded.<br><br>
-
-  <strong>Payment Terms</strong><br>
-  Delivery is only made against advance payment via bank transfer or Twint. Goods are shipped only after full payment has been received.<br><br>
-
-  <strong>Deliveries Abroad</strong><br>
-  Deliveries abroad are only possible by prior arrangement and against advance payment.<br><br>
-
-  <strong>Data Protection</strong><br>
-  Personal customer data is used exclusively for order processing and is not shared with third parties. The provisions of the Swiss Data Protection Act are observed.<br><br>
-
-  <strong>Place of Performance and Jurisdiction</strong><br>
-  The place of performance for delivery and payment as well as the exclusive jurisdiction is Zurich. The application of international sales law is excluded.<br><br>
-
-  <strong>Final Provisions</strong><br>
-  Should individual provisions of these Terms and Conditions be wholly or partially invalid, the validity of the remaining provisions remains unaffected. Errors and typos are reserved.
-  </span>
-</p>
-  </div>
-</div>
-
-
-
-<!-- Impressum Popup -->
-<div id="impressum-popup" class="popup-overlay" onclick="closeImpressumPopup()">
-  <div class="popup-content" onclick="event.stopPropagation()">
-    <span class="popup-close" onclick="closeImpressumPopup()">&times;</span>
-<h2>
-  <span class="de-text" style="display:none;">Impressum</span>
-  <span class="en-text">Legal Notice</span>
-</h2>
-<p>
-  <span class="de-text" style="display:none;">
-    Die Rechte für Texte und Bilder dieser Webseite liegen bei:<br><br>
-    
-    SwissFourParts<br>
-    Frohburgstrasse 142<br>
-    8057 Zürich<br><br>
-
-    Inhaber: Elias Müller<br><br>
-  
-    Kontakt für Fragen zur Website:<br>
-    Telefon: +41 76 320 78 00<br>
-    E-Mail: elias.leitgeweger@gmx.ch<br>
-  </span>
-  <span class="en-text">
-The rights to the texts and images on this website are held by:<br><br>
-SwissFourParts<br>
-Frohburgstrasse 142<br>
-8057 Zurich<br><br>
-Owner: Elias Müller<br><br>
-Contact for questions regarding the website:<br>
-Phone: +41 76 320 78 00<br>
-E-Mail: elias.leitgeweger@gmx.ch
-  </span>
-</p>
-  </div>
-</div>
-
-
-
-</body>
-
-  <!-- Footer -->
-  <footer style="margin-top:50px; padding:20px; border-top:1px solid #ccc; text-align:center; font-size:0.9em; color:#444;">
-
-<div class="footer-links">
-  <a href="javascript:void(0)" onclick="openAboutPopup()">
-    <span class="de-text" style="display:none;">Über uns</span>
-    <span class="en-text">About Us</span>
-  </a>
-  <a href="javascript:void(0)" onclick="openAgbPopup()">
-    <span class="de-text" style="display:none;">AGBs</span>
-    <span class="en-text">Terms & Conditions</span>
-  </a>
-  <a href="javascript:void(0)" onclick="openImpressumPopup()">
-    <span class="de-text" style="display:none;">Impressum</span>
-    <span class="en-text">Legal Notice</span>
-  </a>
-</div>
-
-    <p><strong>SwissFourParts</strong><br>
-    Frohburgstrasse 142<br>
-    8057 Zürich, Switzerland<br>
-    Email: <a href="mailto:elias.leitgeweger@gmx.ch">elias.leitgeweger@gmx.ch</a></p>
+    <p>
+      <strong>SwissFourParts</strong><br>
+      Frohburgstrasse 142<br>
+      8057 Zürich, Switzerland<br>
+      Email: <a href="mailto:elias.leitgeweger@gmx.ch">elias.leitgeweger@gmx.ch</a>
+    </p>
 
     <p style="margin-top:20px; font-size:0.8em; color:#666;">
       © 2025 SwissFourParts. All rights reserved.
     </p>
   </footer>
 
+  <div id="about-popup" class="popup-overlay" onclick="closeAboutPopup()">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <span class="popup-close" onclick="closeAboutPopup()">&times;</span>
+      <h2>
+        <span class="de-text" style="display:none;">Über SwissFourParts</span>
+        <span class="en-text">About SwissFourParts</span>
+      </h2>
+      <p>
+        <span class="de-text" style="display:none;">
+          Willkommen in unserem Shop!<br>
+          Wir sind spezialisiert auf Ersatzteile für die legendären Honda CB-Modelle aus den 1970er-Jahren, wobei unser Schwerpunkt auf der Honda CB750 Four liegt.  
+          Unser Ziel ist es, Motorradbegeisterten in der Schweiz schnell, zuverlässig und preiswert die passenden Teile zu liefern.  
+          Neben unserem eigenen Shop finden Sie unsere Angebote auch auf <a href="https://www.ricardo.ch/de/shop/SwissFourParts/offers/" target="_blank" rel="noopener noreferrer">Ricardo</a>.<br><br>
+          Wenn Sie Fragen zu einem Teil, zur Verfügbarkeit oder zum Versand hast, melde Sie sich gerne per E-Mail oder Telefon.
+        </span>
+        <span class="en-text">
+          Welcome to our shop!<br>
+          We specialize in spare parts for the legendary Honda CB models from the 1970s, with our main focus on the Honda CB750 Four.  
+          Our goal is to provide motorcycle enthusiasts in Switzerland with the right parts quickly, reliably, and at fair prices.  
+          In addition to our own shop, you can also find our offers on <a href="https://www.ricardo.ch/de/shop/SwissFourParts/offers/" target="_blank" rel="noopener noreferrer">Ricardo</a>.<br><br>
+          If you have questions about a part, availability, or shipping, please feel free to contact us by e-mail or phone.
+        </span>
+      </p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:40px;">
+        <img src="images/cb550.jpg" alt="Honda CB550" style="max-width:500px; border:1px solid #ccc;">
+      </div>
+    </div>
+  </div>
 
+  <div id="agb-popup" class="popup-overlay" onclick="closeAgbPopup()">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <span class="popup-close" onclick="closeAgbPopup()">&times;</span>
+      <h2>
+        <span class="de-text" style="display:none;">AGBs</span>
+        <span class="en-text">Terms & Conditions</span>
+      </h2>
+      <p>
+        <span class="de-text" style="display:none;">
+          <strong>Gültigkeit</strong><br>
+          Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Bestellungen im Onlineshop von SwissFourParts. Mit Auftragserteilung anerkennt der Käufer diese Bedingungen. Abweichende Bestimmungen des Käufers haben keine Gültigkeit. Abholung der Ware ist nach Absprache in Zürich möglich.<br><br>
+          <strong>Preise</strong><br>
+          Alle Preise im Onlineshop verstehen sich in Schweizer Franken (CHF) und enthalten die gesetzliche Mehrwertsteuer (sofern anwendbar). Die Versandkosten werden im Bestellvorgang separat ausgewiesen. Preisänderungen bleiben vorbehalten.<br><br>
+          <strong>Lieferfristen</strong><br>
+          Bestellte Teile sind in der Regel an Lager. Der Lagerbestand wird nach Eingang der Bestellung überprüft; sollte ein Artikel oder eine gewünschte Menge nicht verfügbar sein, wird der Käufer informiert. Lieferungen innerhalb der Schweiz erfolgen in der Regel innert 2–5 Werktagen nach Zahlungseingang. Eine verspätete Lieferung entbindet nicht von der Abnahmeverpflichtung. Ansprüche aus Lieferverzug sind ausgeschlossen.<br><br>
+          <strong>Versand und Gefahrtragung</strong><br>
+          Die Versandkosten trägt der Käufer. Diese werden im Bestellvorgang ausgewiesen. Der Versand erfolgt auf Gefahr des Käufers. Sofern nicht anders vereinbart, wählt SwissFourParts die Versandart und den Versandweg nach bestem Ermessen, jedoch ohne Gewähr. Teillieferungen sind zulässig, sofern sie für eine rasche Abwicklung vorteilhaft erscheinen.<br><br>
+          <strong>Transportschäden</strong><br>
+          Transportschäden sind umgehend direkt bei der zuständigen Transportanstalt (z. B. Post, Paketdienst, Spedition) zu melden. Ohne Schadenmeldung des Transporteurs kann kein kostenloser Ersatz gewährt werden.<br><br>
+          <strong>Beanstandungen und Gewährleistung</strong><br>
+          Offensichtliche Mängel sind innerhalb von 14 Tagen nach Erhalt der Ware schriftlich geltend zu machen. Nach Ablauf dieser Frist gilt die Sendung als akzeptiert.<br>
+          Rücksendungen werden nur bei fehlerhafter Lieferung und nach vorheriger Absprache akzeptiert. Die Rücksendung muss in transportsicherer Verpackung und ausreichend frankiert erfolgen. Wir behalten uns vor, beschädigte Waren, die nicht mehr im Originalzustand eintreffen, ganz oder teilweise zu verrechnen.<br>
+          Bei berechtigten Beanstandungen verpflichtet sich SwissFourParts zu kostenloser Instandstellung, Ersatzlieferung oder Rechnungsnachlass. Soweit rechtlich zulässig, sind weitergehende Gewährleistungsansprüche ausgeschlossen. Die Gewährleistung entfällt, wenn der Käufer Änderungen oder Instandsetzungen ohne Zustimmung von SwissFourParts selbst oder durch Dritte vornimmt. Eine Haftung für Folgeschäden ist ausgeschlossen.<br><br>
+          <strong>Zahlungsbedingungen</strong><br>
+          Die Lieferung erfolgt ausschliesslich gegen Vorauskasse per Banküberweisung oder Twint. Die Ware wird erst nach Eingang der vollständigen Zahlung versendet.<br><br>
+          <strong>Lieferungen ins Ausland</strong><br>
+          Lieferungen ins Ausland sind nur nach vorheriger Absprache und ausschliesslich gegen Vorauskasse möglich.<br><br>
+          <strong>Datenschutz</strong><br>
+          Personenbezogene Kundendaten werden ausschliesslich im Rahmen der Bestellabwicklung verwendet und nicht an Dritte weitergegeben. Dabei werden die Bestimmungen des Schweizer Datenschutzgesetzes beachtet.<br><br>
+          <strong>Erfüllungsort und Gerichtsstand</strong><br>
+          Erfüllungsort für Lieferung und Zahlung sowie ausschliesslicher Gerichtsstand ist Zürich. Die Anwendung internationalen Kaufrechts ist ausgeschlossen.<br><br>
+          <strong>Schlussbestimmungen</strong><br>
+          Sollten einzelne Bestimmungen dieser AGB ganz oder teilweise unwirksam sein, bleibt die Gültigkeit der übrigen Bestimmungen unberührt. Irrtümer und Druckfehler bleiben vorbehalten.
+        </span>
+
+        <span class="en-text">
+          These Terms and Conditions (T&C) apply to all orders placed in the SwissFourParts online shop. By placing an order, the buyer accepts these conditions. Deviating terms of the buyer have no validity. Pickup of goods is possible in Zurich by prior arrangement.<br><br>
+          <strong>Prices</strong><br>
+          All prices in the online shop are in Swiss Francs (CHF) and include applicable VAT. Shipping costs are shown separately during the order process. Price changes are reserved.<br><br>
+          <strong>Delivery Times</strong><br>
+          Ordered parts are generally in stock. Stock is checked upon receipt of the order; if an item or the requested quantity is not available, the buyer will be informed. Deliveries within Switzerland usually take 2–5 business days after receipt of payment. Late delivery does not release the buyer from the obligation to accept the goods. Claims for delivery delays are excluded.<br><br>
+          <strong>Shipping and Risk</strong><br>
+          Shipping costs are borne by the buyer and are displayed during the order process. Delivery is at the buyer's risk. Unless otherwise agreed, SwissFourParts selects the shipping method and route at its discretion, without guarantee. Partial deliveries are allowed if they are advantageous for prompt order processing.<br><br>
+          <strong>Transport Damage</strong><br>
+          Transport damage must be reported immediately to the responsible transport company (e.g., post office, parcel service, freight forwarder). Without a damage report from the carrier, free replacement cannot be granted.<br><br>
+          <strong>Complaints and Warranty</strong><br>
+          Obvious defects must be reported in writing within 14 days after receipt of the goods. After this period, the shipment is considered accepted.<br>
+          Returns are only accepted in case of incorrect delivery and after prior arrangement. Returns must be in secure packaging and adequately prepaid. We reserve the right to charge for damaged goods that do not arrive in their original condition, wholly or partially.<br>
+          In the case of justified complaints, SwissFourParts undertakes free repair, replacement, or invoice reduction. As far as legally permissible, further warranty claims are excluded. Warranty is void if the buyer makes modifications or repairs without SwissFourParts' consent. Liability for consequential damages is excluded.<br><br>
+          <strong>Payment Terms</strong><br>
+          Delivery is only made against advance payment via bank transfer or Twint. Goods are shipped only after full payment has been received.<br><br>
+          <strong>Deliveries Abroad</strong><br>
+          Deliveries abroad are only possible by prior arrangement and against advance payment.<br><br>
+          <strong>Data Protection</strong><br>
+          Personal customer data is used exclusively for order processing and is not shared with third parties. The provisions of the Swiss Data Protection Act are observed.<br><br>
+          <strong>Place of Performance and Jurisdiction</strong><br>
+          The place of performance for delivery and payment as well as the exclusive jurisdiction is Zurich. The application of international sales law is excluded.<br><br>
+          <strong>Final Provisions</strong><br>
+          Should individual provisions of these Terms and Conditions be wholly or partially invalid, the validity of the remaining provisions remains unaffected. Errors and typos are reserved.
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <div id="impressum-popup" class="popup-overlay" onclick="closeImpressumPopup()">
+    <div class="popup-content" onclick="event.stopPropagation()">
+      <span class="popup-close" onclick="closeImpressumPopup()">&times;</span>
+      <h2>
+        <span class="de-text" style="display:none;">Impressum</span>
+        <span class="en-text">Legal Notice</span>
+      </h2>
+      <p>
+        <span class="de-text" style="display:none;">
+          Die Rechte für Texte und Bilder dieser Webseite liegen bei:<br><br>
+          SwissFourParts<br>
+          Frohburgstrasse 142<br>
+          8057 Zürich<br><br>
+          Inhaber: Elias Müller<br><br>
+          Kontakt für Fragen zur Website:<br>
+          Telefon: +41 76 320 78 00<br>
+          E-Mail: elias.leitgeweger@gmx.ch<br>
+        </span>
+        <span class="en-text">
+          The rights to the texts and images on this website are held by:<br><br>
+          SwissFourParts<br>
+          Frohburgstrasse 142<br>
+          8057 Zurich<br><br>
+          Owner: Elias Müller<br><br>
+          Contact for questions regarding the website:<br>
+          Phone: +41 76 320 78 00<br>
+          E-Mail: elias.leitgeweger@gmx.ch
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
 </html>
 
 
