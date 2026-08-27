@@ -1,13 +1,13 @@
 let products = [
   {
     "id": 1,
-    "name_de": "CB750 Zündkerze (NGK D8EA)",
-    "name_en": "CB750 Spark plug (NGK D8EA)",
+    "name_de": "Zündkerze (NGK D8EA)",
+    "name_en": "Spark plug (NGK D8EA)",
     "price": 5.5,
     "description_de": "NGK",
     "description_en": "NGK",
     "image": "images/zündkerze.jpg",
-    "categories": ["CB750"],
+    "categories": ["CB750", "CB400F", "CB350F"],
     "in_stock": true
   },
   {
@@ -29,18 +29,18 @@ let products = [
     "description_de": "Ölfilter und Dichtung",
     "description_en": "Oilfilter and O-ring",
     "image": "images/oilfilter.jpg",
-    "categories": ["CB750", "CB550K"],
+    "categories": ["CB750", "CB550K", "CB400F", "CB350F"],
     "in_stock": true
   },
   {
     "id": 4,
-    "name_de": "CB750 Dichtring Vorderbremse",
-    "name_en": "CB750 Front Brake Piston Seal",
+    "name_de": "Dichtring Vorderbremse",
+    "name_en": "Front Brake Piston Seal",
     "price": 9.5,
     "description_de": "originales Ersatzteil",
     "description_en": "original spare part",
     "image": "images/dichtring_bremse.jpg",
-    "categories": ["CB750"],
+    "categories": ["CB750", "CB550K", "CB400F", "CB350F"],
     "in_stock": true
   },
   {
@@ -56,13 +56,13 @@ let products = [
   },
   {
     "id": 6,
-    "name_de": "CB750 Kupplungshebel",
-    "name_en": "CB750 Clutch lever",
+    "name_de": "Kupplungshebel",
+    "name_en": "Clutch lever",
     "price": 18,
     "description_de": "originales Ersatzteil",
     "description_en": "original spare part",
     "image": "images/kupplungshebel.jpg",
-    "categories": ["CB750"],
+    "categories": ["CB750", "CB400F", "CB350F"],
     "in_stock": true
   },
   {
@@ -73,7 +73,7 @@ let products = [
     "description_de": "originales Ersatzteil",
     "description_en": "original spare part",
     "image": "images/lenkermutter.jpg",
-    "categories": ["CB750", "CB550K"],
+    "categories": ["CB750", "CB550K", "CB400F", "CB350F"],
     "in_stock": true
   },
   {
@@ -113,7 +113,7 @@ let products = [
     "id": 11,
     "name_de": "CB750 K1 Tankemblem Kit",
     "name_en": "CB750 K1 Tank Emblem Kit",
-    "price": 85,
+    "price": 82,
     "description_de": "originales Ersatzteil",
     "description_en": "original spare part",
     "image": "images/tank_emblem_set.jpg",
@@ -155,8 +155,8 @@ let products = [
   },
   {
     "id": 15,
-    "name_de": "Kickstartergummi",
-    "name_en": "Rubber kickstarter",
+    "name_de": "Kickstartergummi (K0-K2)",
+    "name_en": "Rubber kickstarter (K0-K2)",
     "price": 3.5,
     "description_de": "originales Ersatzteil",
     "description_en": "original spare part",
@@ -166,24 +166,46 @@ let products = [
   },
   {
     "id": 16,
-    "name_de": "Griffgummi set",
-    "name_en": "Handlebar grip set",
+    "name_de": "Griffgummi set (CB750 K0-K1, CB400F)",
+    "name_en": "Handlebar grip set (CB750 K0-K1, CB400F)",
     "price": 12.5,
     "description_de": "originales Ersatzteil",
     "description_en": "original spare part",
     "image": "images/griffgummi_set.jpg",
-    "categories": ["CB750"],
+    "categories": ["CB750", "CB400F"],
     "in_stock": true
   },
   {
     "id": 17,
-    "name_de": "Bremsklötze vorne",
+    "name_de": "Bremsbeläge vorne",
     "name_en": "Breakpads front",
     "price": 39,
     "description_de": "japanisches Ersatzteil",
     "description_en": "japanese spare part",
     "image": "images/bremsklötze.jpg",
     "categories": ["CB750"],
+    "in_stock": true
+  },
+  {
+    "id": 18,
+    "name_de": "Befestigungsgummis Seitenabdeckung",
+    "name_en": "Side Cover Rubber Grommets",
+    "price": 12.5,
+    "description_de": "japanisches Ersatzteil",
+    "description_en": "japanese spare part",
+    "image": "images/Befestigungsgummis_Seitenabdeckung.jpg",
+    "categories": ["CB750"],
+    "in_stock": true
+  },
+  {
+    "id": 19,
+    "name_de": "Birne Blinker",
+    "name_en": "Turn Signal Bulb",
+    "price": 3,
+    "description_de": "originales Ersatzteil",
+    "description_en": "original spare part",
+    "image": "images/birne_blinker.jpg",
+    "categories": ["CB750", "CB400F", "CB350F"],
     "in_stock": true
   }
 ];
@@ -206,7 +228,7 @@ function filterProducts(filter) {
   currentCategoryFilter = filter;
   currentPage = 1;
 
-  ['filter-alle', 'filter-cb750', 'filter-cb550k', 'filter-cb125t'].forEach(id => {
+  ['filter-alle', 'filter-cb750', 'filter-cb550k', 'filter-cb400f', 'filter-cb350f', 'filter-cb125t'].forEach(id => {
     document.getElementById(id)?.classList.toggle('active', id === 'filter-' + filter.toLowerCase());
   });
 
@@ -262,7 +284,7 @@ function renderProducts() {
         ` : ''}
       </div>
       <div class="quantity-controls" onclick="event.stopPropagation()">
-        <button onclick="increaseQuantity(${index})" ${isOutOfStock ? "disabled" : ""}>-</button>
+        <button onclick="decreaseQuantity(${index})" ${isOutOfStock ? "disabled" : ""}>-</button>
         <span id="qty-${index}">${quantities[index]}</span>
         <button onclick="increaseQuantity(${index})" ${isOutOfStock ? "disabled" : ""}>+</button>
       </div>
@@ -315,7 +337,7 @@ function setLanguage(lang) {
   document.getElementById('lang-de')?.classList.toggle('active', lang === 'de');
   document.getElementById('lang-en')?.classList.toggle('active', lang === 'en');
 
-  ['filter-alle', 'filter-cb750', 'filter-cb550k', 'filter-cb125t', 'condition-new', 'condition-used'].forEach(id => {
+  ['filter-alle', 'filter-cb750', 'filter-cb550k', 'filter-cb400f', 'filter-cb350f', 'filter-cb125t', 'condition-new', 'condition-used'].forEach(id => {
     const btn = document.getElementById(id);
     if (btn) {
       btn.querySelectorAll('span.de-text').forEach(el => el.style.display = (lang === 'de') ? '' : 'none');
@@ -373,7 +395,7 @@ function updateOrderSummary() {
   let hasItems = false;
   let summaryText = "";
   let total = 0;
-  const shippingCost = 8.5;
+  const shippingCost = 4.0;
 
   const col1 = 36;
   const col2 = 10;
