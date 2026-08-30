@@ -7,6 +7,14 @@ body {
   overflow-x: hidden; /* Prevents horizontal scrollbars when sidebar moves */
 }
 
+
+html, body {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 .page-wrapper {
   position: relative;
   display: flex;
@@ -365,6 +373,8 @@ a:hover {
   font-size: 1.1em;
   line-height: 1.6em;
   white-space: pre;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 #send-email-button {
