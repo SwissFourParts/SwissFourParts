@@ -1,15 +1,178 @@
+/* Page background (the grey surrounding area) */
 body {
- font-family: Arial, sans-serif;
-  /* 1. Set your main 1000px container color here */
- background: #faefe1; 
-  color: #222222;
- max-width: 1000px;
- margin: 20px auto;
- min-width: 900px;
- padding: 0 15px;
-  /* 2. Set your outer full-page background color here */
- box-shadow: 0 0 0 9999px #37383b; 
-  border-radius: 8px; /* Optional: smooths the corners of your container */
+  font-family: Arial, sans-serif;
+  background-color: #37383b; /* Your outer grey background */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevents horizontal scrollbars when sidebar moves */
+}
+
+.page-wrapper {
+  position: relative;
+  display: flex;
+  max-width: 1000px;
+  margin: 20px auto; /* Added vertical margin to separate it from top/bottom screen edges */
+  overflow: hidden; /* Clips content and sidebar to the rounded corners */
+  border-radius: 12px; /* Controls corner roundness */
+}
+
+
+/* Sidebar styling */
+#sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  background-color: #ffffff;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+  
+  /* Hidden state: shifted left, layer sits beneath main interactive elements */
+  z-index: 10;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Active/Open state for sidebar */
+#sidebar.open {
+  transform: translateX(0);
+  z-index: 1000; /* Moves above main content when open */
+}
+
+/* Main Content Area */
+.main-content {
+  position: relative;
+  width: 100%;
+  background: #faefe1; /* Cream background */
+  padding: 15px 20px 20px 20px;
+  box-sizing: border-box;
+  z-index: 20; /* Sits above the closed sidebar layer */
+}
+
+/* Sidebar Overlay (darkened backdrop when sidebar opens) */
+#sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 995;
+  display: none;
+}
+
+#sidebar-overlay.active {
+  display: block;
+}
+
+.sidebar-title {
+  font-size: 1.2em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #777777;
+  margin: 100px 0 15px 10px;
+  font-weight: bold;
+}
+
+.sidebar-nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 6px;
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  color: #333333;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1em;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-nav a:hover {
+  background-color: #f4ece1;
+  color: #000000;
+}
+
+/* Page Layout */
+/* Ensure page-wrapper acts as the relative positioning boundary */
+.page-wrapper {
+  position: relative;
+  display: flex;
+  max-width: 1000px; /* Or whatever maximum width container you use */
+  margin: 0 auto;
+}
+
+/* Position sidebar absolutely relative to the page-wrapper */
+#sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  z-index: 1000;
+  background-color: #ffffff;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+
+  /* Start off-screen (hidden to the left of the main block) */
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Class added via JS when sidebar is open */
+#sidebar.open {
+  transform: translateX(0);
+}
+
+/* Main Content Area */
+.main-content {
+  position: relative;
+  width: 100%;
+  background: #faefe1;
+  padding: 15px 20px 20px 20px;
+  box-sizing: border-box;
+}
+
+/* 1. Move toggle button to top-left */
+#sidebar-toggle {
+  position: absolute;
+  top: 15px;
+  left: 15px; /* Shifted from right: 15px to left: 15px */
+  z-index: 990;
+  background: #ffffff;
+  border: 1px solid #e2d2c0;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#sidebar-toggle:hover {
+  background-color: #f7f0e6;
+}
+
+/* Adjust header spacing so the title/logo isn't covered by the new top-left toggle */
+#header {
+  margin-top: 5px; /* Give room above header for the left-aligned toggle */
+}
+
+
+
+/* Responsiveness tweaks for smaller displays */
+@media (max-width: 900px) {
+  .page-wrapper {
+    margin: 10px;
+    border-radius: 6px;
+  }
 }
 
 
@@ -329,4 +492,55 @@ footer {
   background-color: #444;
   color: white;
   border-color: #444;
+}
+
+
+
+
+/* Knowledge Base PDF Cards */
+.pdf-card {
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.pdf-icon {
+  font-size: 2.2rem;
+  margin-right: 15px;
+  user-select: none;
+}
+
+.pdf-card .product-details {
+  flex-grow: 1;
+}
+
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #444;
+  color: #ffffff !important;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+.download-btn:hover {
+  background-color: #222;
+  text-decoration: none;
+}
+
+
+/* PDF Preview Thumbnail */
+.pdf-thumbnail {
+  width: 143px;
+  height: 95px;
+  object-fit: cover;
+  border: 1px solid #dcdcdm;
+  border-radius: 4px;
+  margin-right: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
 }
