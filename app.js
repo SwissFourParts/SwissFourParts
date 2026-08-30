@@ -207,8 +207,113 @@ let products = [
     "image": "images/birne_blinker.jpg",
     "categories": ["CB750", "CB400F", "CB350F"],
     "in_stock": true
+  },
+  {
+    "id": 20,
+    "name_de": "Schalthebel Gummi",
+    "name_en": "Shift lever rubber",
+    "price": 2.5,
+    "description_de": "originales Ersatzteil",
+    "description_en": "original spare part",
+    "image": "images/schalthebel_gummi.jpg",
+    "categories": ["CB750", "CB400F", "CB350F"],
+    "in_stock": true
   }
 ];
+
+
+
+
+
+// Add your PDF list configuration
+let pdfs = [
+  {
+    "id": 1,
+    "title_de": "CB125T Anzugsdrehmomente Deutsch",
+    "title_en": "CB125T Torque values german",
+    "description_de": "PDF",
+    "description_en": "PDF",
+    "filename": "CB125T_Anzugsdrehmomente.pdf",
+    "thumbnail": "pdfs/CB125T_Anzugsdrehmomente_thumbnail.jpg"
+  }
+];
+
+let currentView = 'shop'; // 'shop' or 'knowledge'
+
+// Switch to Shop view
+function showShop() {
+  currentView = 'shop';
+  document.getElementById('filter-buttons').style.display = 'flex';
+  document.getElementById('order-summary').style.display = 'block';
+  document.getElementById('how-to-order').style.display = 'block';
+  renderProducts();
+  closeSidebarIfOpen();
+}
+
+// Switch to Knowledge Base view
+function showKnowledgeBase() {
+  currentView = 'knowledge';
+  document.getElementById('filter-buttons').style.display = 'none';
+  document.getElementById('pagination-controls').innerHTML = '';
+  document.getElementById('order-summary').style.display = 'none';
+  document.getElementById('how-to-order').style.display = 'none';
+  renderPDFs();
+  closeSidebarIfOpen();
+}
+
+// Render PDF files inside product container
+function renderPDFs() {
+  const container = document.getElementById("product-list");
+  container.innerHTML = "";
+
+  if (pdfs.length === 0) {
+    container.innerHTML = `
+      <p class="de-text">Keine Dokumente verfügbar.</p>
+      <p class="en-text" style="display:none;">No documents available.</p>
+    `;
+    applyLanguageVisibility();
+    return;
+  }
+
+  pdfs.forEach((pdf) => {
+    const pdfDiv = document.createElement("div");
+    pdfDiv.className = "product pdf-card";
+
+    // Use image thumbnail if provided, otherwise fallback to standard PDF icon
+    const previewHTML = pdf.thumbnail
+      ? `<img src="${pdf.thumbnail}" alt="${pdf.title_en}" class="pdf-thumbnail">`
+      : `<div class="pdf-icon">📄</div>`;
+
+    pdfDiv.innerHTML = `
+      ${previewHTML}
+      <div class="product-details">
+        <strong class="de-text">${pdf.title_de}</strong>
+        <strong class="en-text" style="display:none;">${pdf.title_en}</strong><br>
+        <span class="de-text">${pdf.description_de}</span>
+        <span class="en-text" style="display:none;">${pdf.description_en}</span>
+      </div>
+      <a href="pdfs/${pdf.filename}" download class="download-btn" onclick="event.stopPropagation()">
+        <span class="de-text">Herunterladen</span>
+        <span class="en-text" style="display:none;">Download</span> 📥
+      </a>
+    `;
+    container.appendChild(pdfDiv);
+  });
+
+  applyLanguageVisibility();
+}
+
+// Helper to close sidebar when navigating
+function closeSidebarIfOpen() {
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar && sidebar.classList.contains('open')) {
+    toggleSidebar();
+  }
+}
+
+
+
+
 
 let quantities = [];
 let language = 'de';
@@ -225,6 +330,9 @@ function loadProducts() {
 
 // Filter category and reset to page 1
 function filterProducts(filter) {
+  if (currentView !== 'shop') {
+    showShop();
+  }
   currentCategoryFilter = filter;
   currentPage = 1;
 
@@ -444,3 +552,13 @@ function updateOrderSummary() {
 window.onload = () => {
   loadProducts();
 };
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  
+  if (sidebar && overlay) {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('active');
+  }
+}
