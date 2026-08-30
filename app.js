@@ -235,6 +235,15 @@ let pdfs = [
     "description_en": "PDF",
     "filename": "CB125T_Anzugsdrehmomente.pdf",
     "thumbnail": "pdfs/CB125T_Anzugsdrehmomente_thumbnail.jpg"
+  },
+  {
+    "id": 2,
+    "title_de": "CB750K Anzugsdrehmomente Englisch",
+    "title_en": "CB750K Torque values english",
+    "description_de": "PDF",
+    "description_en": "PDF",
+    "filename": "CB750K_Torque_values.pdf",
+    "thumbnail": "pdfs/CB750K_Torque_thumbnail.jpg"
   }
 ];
 
