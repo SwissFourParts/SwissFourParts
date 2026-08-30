@@ -8,114 +8,154 @@
 </head>
 <body>
 
-  <div id="header">
-    <div class="logo-container">
-      <img src="images/sfp_logo_mit_schrift.png" alt="SwissFourParts">
+  <!-- Sidebar Overlay for dimming effect -->
+  <div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <div class="page-wrapper">
+  
+  <!-- Sidebar sits inside page-wrapper so it slides out from the main body's left border -->
+  <aside id="sidebar">
+    <div class="sidebar-title">
+      <span class="de-text">Navigation</span>
+      <span class="en-text" style="display:none;">Navigation</span>
     </div>
-
-    <div id="language-selection">
-      <a href="#" id="lang-de" class="active" onclick="setLanguage('de')">Deutsch</a> | 
-      <a href="#" id="lang-en" onclick="setLanguage('en')">English</a>
-    </div>
-  </div>
-
-  <div id="filter-buttons">
-    <button id="filter-alle" class="active" onclick="filterProducts('alle')">
-      <span class="de-text">Alle anzeigen</span>
-      <span class="en-text" style="display:none;">Show all</span>
-    </button>
-    <button id="filter-cb750" onclick="filterProducts('CB750')">
-      <span class="de-text" style="display:none;">CB750 Four</span>
-      <span class="en-text">CB750 Four</span>
-    </button>
-    <button id="filter-cb550k" onclick="filterProducts('CB550K')">
-      <span class="de-text" style="display:none;">CB550K</span>
-      <span class="en-text">CB550K</span>
-    </button>
-    <button id="filter-cb400f" onclick="filterProducts('CB400F')">
-      <span class="de-text" style="display:none;">CB400F</span>
-      <span class="en-text">CB400F</span>
-    </button>
-    <button id="filter-cb350f" onclick="filterProducts('CB350F')">
-      <span class="de-text" style="display:none;">CB350F</span>
-      <span class="en-text">CB350F</span>
-    </button>
-    <button id="filter-cb125t" onclick="filterProducts('CB125T')">
-      <span class="de-text" style="display:none;">CB125T</span>
-      <span class="en-text">CB125T</span>
-    </button>
-  </div>
-
-  <div id="product-list"></div>
-
-  <div id="pagination-controls"></div>
-
-
-  <div id="order-summary">
-    <strong id="order-summary-title">Bestellübersicht</strong><br>
-    <pre id="order-summary-text">Keine Produkte ausgewählt.</pre>
-    <a id="send-email-button" href="#" target="_blank" rel="noopener noreferrer">Bestellung senden</a>
-  </div>
-
-  <div id="popup" class="popup-overlay" onclick="closePopup()">
-    <div class="popup-content" onclick="event.stopPropagation()">
-      <span class="popup-close" onclick="closePopup()">&times;</span>
-      <img id="popup-img" src="" alt="">
-      <div id="popup-text"></div>
-    </div>
-  </div>
-
-  <div id="how-to-order">
-    <p class="de-text" style="display:none;">
-      <strong>So bestellen Sie:</strong><br>
-      Wählen Sie die gewünschten Produkte aus und passen Sie die Anzahl mit den +/– Buttons an.  
-      In der Bestellübersicht sehen Sie eine Zusammenfassung.  
-      Klicken Sie auf „Bestellung senden“, um uns direkt per E-Mail zu kontaktieren.  
-      Alternativ können Sie den Bestelltext auch kopieren und selbst per E-Mail oder WhatsApp versenden.  
-      Nach Eingang Ihrer Bestellung erhalten Sie eine Bestätigung mit den Zahlungsinformationen.
-    </p>
-    <p class="en-text">
-      <strong>How to order:</strong><br>
-      Select the products you want and adjust the quantity using the +/– buttons.  
-      The order summary will show your selection.  
-      Click “Send order” to contact us directly via e-mail.  
-      Alternatively, you can copy the order text and send it yourself via e-mail or WhatsApp.  
-      Once your order is received, you will get a confirmation with payment details.
-    </p>
-
-    <p style="margin-top:15px; font-weight:bold;">
-      E-Mail: <a href="mailto:elias.leitgeweger@gmx.ch">elias.leitgeweger@gmx.ch</a><br>
-      WhatsApp / Telefon: <a href="tel:+41763207800">+41 76 320 78 00</a>
-    </p>
-  </div>
-
-  <footer>
-    <div class="footer-links">
-      <a href="javascript:void(0)" onclick="openAboutPopup()">
-        <span class="de-text" style="display:none;">Über uns</span>
-        <span class="en-text">About Us</span>
+    <nav class="sidebar-nav">
+  <ul>
+    <li>
+      <a href="javascript:void(0)" onclick="showShop()">
+        <span class="de-text">Teile</span>
+        <span class="en-text" style="display:none;">Parts</span>
       </a>
-      <a href="javascript:void(0)" onclick="openAgbPopup()">
-        <span class="de-text" style="display:none;">AGBs</span>
-        <span class="en-text">Terms & Conditions</span>
+    </li>
+    <li>
+      <a href="javascript:void(0)" onclick="showShop()">
+        <span class="de-text">Gebrauchte Teile</span>
+        <span class="en-text" style="display:none;">Used parts</span>
       </a>
-      <a href="javascript:void(0)" onclick="openImpressumPopup()">
-        <span class="de-text" style="display:none;">Impressum</span>
-        <span class="en-text">Legal Notice</span>
+    </li>
+    <li>
+      <a href="javascript:void(0)" onclick="showKnowledgeBase()">
+        <span class="de-text">Wissen / Guides</span>
+        <span class="en-text" style="display:none;">Knowledge base</span>
       </a>
-    </div>
+    </li>
+  </ul>
+</nav>
+  </aside>
 
-    <p>
-      <strong>SwissFourParts</strong><br>
-      Frohburgstrasse 142<br>
-      8057 Zürich, Switzerland<br>
-      Email: <a href="mailto:elias.leitgeweger@gmx.ch">elias.leitgeweger@gmx.ch</a>
-    </p>
+  <main class="main-content">
+    <!-- Toggle button positioned top-left -->
+    <button id="sidebar-toggle" aria-label="Toggle Navigation" onclick="toggleSidebar()">☰</button>
 
-    <p style="margin-top:20px; font-size:0.8em; color:#666;">
-      © 2025 SwissFourParts. All rights reserved.
-    </p>
-  </footer>
+    <div id="header">
+        <div class="logo-container">
+          <img src="images/sfp_logo_mit_schrift.png" alt="SwissFourParts">
+        </div>
+
+        <div id="language-selection">
+          <a href="#" id="lang-de" class="active" onclick="setLanguage('de')">Deutsch</a> | 
+          <a href="#" id="lang-en" onclick="setLanguage('en')">English</a>
+        </div>
+      </div>
+
+      <div id="filter-buttons">
+        <button id="filter-alle" class="active" onclick="filterProducts('alle')">
+          <span class="de-text">Alle anzeigen</span>
+          <span class="en-text" style="display:none;">Show all</span>
+        </button>
+        <button id="filter-cb750" onclick="filterProducts('CB750')">
+          <span class="de-text" style="display:none;">CB750 Four</span>
+          <span class="en-text">CB750 Four</span>
+        </button>
+        <button id="filter-cb550k" onclick="filterProducts('CB550K')">
+          <span class="de-text" style="display:none;">CB550K</span>
+          <span class="en-text">CB550K</span>
+        </button>
+        <button id="filter-cb400f" onclick="filterProducts('CB400F')">
+          <span class="de-text" style="display:none;">CB400F</span>
+          <span class="en-text">CB400F</span>
+        </button>
+        <button id="filter-cb350f" onclick="filterProducts('CB350F')">
+          <span class="de-text" style="display:none;">CB350F</span>
+          <span class="en-text">CB350F</span>
+        </button>
+        <button id="filter-cb125t" onclick="filterProducts('CB125T')">
+          <span class="de-text" style="display:none;">CB125T</span>
+          <span class="en-text">CB125T</span>
+        </button>
+      </div>
+
+      <div id="product-list"></div>
+
+      <div id="pagination-controls"></div>
+
+      <div id="order-summary">
+        <strong id="order-summary-title">Bestellübersicht</strong><br>
+        <pre id="order-summary-text">Keine Produkte ausgewählt.</pre>
+        <a id="send-email-button" href="#" target="_blank" rel="noopener noreferrer">Bestellung senden</a>
+      </div>
+
+      <div id="popup" class="popup-overlay" onclick="closePopup()">
+        <div class="popup-content" onclick="event.stopPropagation()">
+          <span class="popup-close" onclick="closePopup()">&times;</span>
+          <img id="popup-img" src="" alt="">
+          <div id="popup-text"></div>
+        </div>
+      </div>
+
+      <div id="how-to-order">
+        <p class="de-text" style="display:none;">
+          <strong>So bestellen Sie:</strong><br>
+          Wählen Sie die gewünschten Produkte aus und passen Sie die Anzahl mit den +/– Buttons an.  
+          In der Bestellübersicht sehen Sie eine Zusammenfassung.  
+          Klicken Sie auf „Bestellung senden“, um uns direkt per E-Mail zu kontaktieren.  
+          Alternativ können Sie den Bestelltext auch kopieren und selbst per E-Mail oder WhatsApp versenden.  
+          Nach Eingang Ihrer Bestellung erhalten Sie eine Bestätigung mit den Zahlungsinformationen.
+        </p>
+        <p class="en-text">
+          <strong>How to order:</strong><br>
+          Select the products you want and adjust the quantity using the +/– buttons.  
+          The order summary will show your selection.  
+          Click “Send order” to contact us directly via e-mail.  
+          Alternatively, you can copy the order text and send it yourself via e-mail or WhatsApp.  
+          Once your order is received, you will get a confirmation with payment details.
+        </p>
+
+        <p style="margin-top:15px; font-weight:bold;">
+          E-Mail: <a href="mailto:elias.leitgeweger@gmx.ch">elias.leitgeweger@gmx.ch</a><br>
+          WhatsApp / Telefon: <a href="tel:+41763207800">+41 76 320 78 00</a>
+        </p>
+      </div>
+
+      <footer>
+        <div class="footer-links">
+          <a href="javascript:void(0)" onclick="openAboutPopup()">
+            <span class="de-text" style="display:none;">Über uns</span>
+            <span class="en-text">About Us</span>
+          </a>
+          <a href="javascript:void(0)" onclick="openAgbPopup()">
+            <span class="de-text" style="display:none;">AGBs</span>
+            <span class="en-text">Terms & Conditions</span>
+          </a>
+          <a href="javascript:void(0)" onclick="openImpressumPopup()">
+            <span class="de-text" style="display:none;">Impressum</span>
+            <span class="en-text">Legal Notice</span>
+          </a>
+        </div>
+
+        <p>
+          <strong>SwissFourParts</strong><br>
+          Frohburgstrasse 142<br>
+          8057 Zürich, Switzerland<br>
+          Email: <a href="mailto:elias.leitgeweger@gmx.ch">elias.leitgeweger@gmx.ch</a>
+        </p>
+
+        <p style="margin-top:20px; font-size:0.8em; color:#666;">
+          © 2025 SwissFourParts. All rights reserved.
+        </p>
+      </footer>
+    </main>
+  </div>
 
   <div id="about-popup" class="popup-overlay" onclick="closeAboutPopup()">
     <div class="popup-content" onclick="event.stopPropagation()">
@@ -245,18 +285,3 @@
   <script src="app.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
