@@ -179,6 +179,7 @@ html, body {
 @media (max-width: 900px) {
   .page-wrapper {
     margin: 0px;
+    width: 100%;
     border-radius: 6px;
   }
 }
