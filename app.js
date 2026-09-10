@@ -227,7 +227,7 @@ let products = [
     "description_de": "originales Ersatzteil",
     "description_en": "original spare part",
     "image": "images/seitenstaender_gummi.jpg",
-    "categories": ["CB750", "CB400F", "CB350F"],
+    "categories": ["CB750", "CB400F"],
     "in_stock": true
   }
 ];
