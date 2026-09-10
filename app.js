@@ -218,6 +218,17 @@ let products = [
     "image": "images/schalthebel_gummi.jpg",
     "categories": ["CB750", "CB400F", "CB350F"],
     "in_stock": true
+  },
+  {
+    "id": 21,
+    "name_de": "Seitenständer Gummi",
+    "name_en": "Side stand rubber",
+    "price": 1.0,
+    "description_de": "originales Ersatzteil",
+    "description_en": "original spare part",
+    "image": "images/seitenstaender_gummi.jpg",
+    "categories": ["CB750", "CB400F", "CB350F"],
+    "in_stock": true
   }
 ];
 
