@@ -178,7 +178,7 @@ html, body {
 /* Responsiveness tweaks for smaller displays */
 @media (max-width: 900px) {
   .page-wrapper {
-    margin: 10px;
+    margin: 0px;
     border-radius: 6px;
   }
 }
