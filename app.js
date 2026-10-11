@@ -229,6 +229,28 @@ let products = [
     "image": "images/seitenstaender_gummi.jpg",
     "categories": ["CB750", "CB400F"],
     "in_stock": true
+  },
+  {
+    "id": 22,
+    "name_de": "Gabelmutter (CB400F)",
+    "name_en": "Fork cap nut (CB400F)",
+    "price": 4.5,
+    "description_de": "originales Ersatzteil",
+    "description_en": "original spare part",
+    "image": "images/gabelmutter_cb400.jpg",
+    "categories": ["CB400F"],
+    "in_stock": true
+  },
+  {
+    "id": 23,
+    "name_de": "Vergaser Ansaugstutzen (CB750 Four)",
+    "name_en": "Carburetor intake boots (CB750 Four)",
+    "price": 82,
+    "description_de": "originales Ersatzteil",
+    "description_en": "original spare part",
+    "image": "images/ansaugstutzen.jpg",
+    "categories": ["CB750"],
+    "in_stock": true
   }
 ];
 
